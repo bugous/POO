@@ -205,8 +205,8 @@ public class produtos {
 	}
   
 }
-
-Classe ProdutosNomeComparator                                                                                                    import java.util.Comparator;
+                                                                                               
+import java.util.Comparator;
 
 public class ProdutosNomeComparator implements Comparator<produtos> {
 
