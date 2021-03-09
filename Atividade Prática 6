@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @SuppressWarnings("unused")
-public class Principal {
+public class Principal{
 	
 	@SuppressWarnings({"unused", "resource", "unlikely-arg-type" })
 	public static void main(String[] args) {
