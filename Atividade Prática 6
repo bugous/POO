@@ -20,7 +20,7 @@ public class Principal {
 		String nomePessoa, cpf, endereco, email, estadoCivil, nomeFantasia, cnpj, enderecoEmpresa, emailEmpresa, inscricaoEstadual, razaoSocial;
 		Calendar dataQueNasceu = null;
 				
-		do {	
+		do{	
 		boolean achouPessoa = false;
 		System.out.println("---------- Menu ----------");
 		System.out.println("");
