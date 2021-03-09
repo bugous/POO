@@ -1,0 +1,441 @@
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Scanner;
+
+@SuppressWarnings("unused")
+public class Principal {
+	
+	@SuppressWarnings({"unused", "resource", "unlikely-arg-type" })
+	public static void main(String[] args) {
+		
+		Scanner scan = new Scanner(System.in);
+		Scanner scan2 = new Scanner(System.in);
+		
+		List<PessoaFisica> agendaPessoaFisica = new ArrayList<PessoaFisica>();
+		List<PessoaJuridica> agendaEmpresas = new ArrayList<PessoaJuridica>();
+		
+		Integer i, nroPessoasCadastradas, nroEmpresasCadastradas, diaDoNascimento, mesDoNascimento, anoDoNascimento, opcao;
+		String nomePessoa, cpf, endereco, email, estadoCivil, nomeFantasia, cnpj, enderecoEmpresa, emailEmpresa, inscricaoEstadual, razaoSocial;
+		Calendar dataQueNasceu = null;
+				
+		do {	
+		boolean achouPessoa = false;
+		System.out.println("---------- Menu ----------");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("1. Cadastrar uma pessoa;");
+		System.out.println("2. Cadastrar uma empresa;");
+		System.out.println("3. Editar uma pessoa;");
+		System.out.println("4. Editar uma empresa;");
+		System.out.println("5. Excluir uma pessoa;");
+		System.out.println("6. Excluir uma empresa;");
+		System.out.println("7. Listar todas as pessoas;");
+		System.out.println("8. Listar todas as empresas;");
+		System.out.println("");
+		System.out.println("9. Sair;");
+		System.out.println("");
+		System.out.print("Digite a opção desejada: ");
+		
+		opcao = scan.nextInt();
+		System.out.println("");
+		
+			switch (opcao) {
+			case 1: 
+				System.out.println("---------- Cadastro de Pessoa ----------");
+				System.out.println("");
+				
+				System.out.print("Digite o CPF da pessoa: ");
+				cpf = scan.next();
+
+				System.out.print("Digite o Nome Completo da pessoa: ");
+				nomePessoa = scan2.nextLine();				
+				
+				System.out.print("Digite o Endereço da pessoa: ");
+				endereco = scan2.nextLine();
+				
+				System.out.print("Digite o DIA do Nascimento da pessoa: ");
+				diaDoNascimento = scan.nextInt();
+				
+				System.out.print("Digite o MÊS do Nascimento da pessoa: ");
+				mesDoNascimento = scan.nextInt();
+				
+				System.out.print("Digite o ANO do Nascimento da pessoa: ");
+				anoDoNascimento = scan.nextInt();
+				
+				System.out.print("Digite o e-mail da pessoa: ");
+				email = scan.next();
+				
+				System.out.print("Digite o Estado Civil da pessoa: ");
+				estadoCivil = scan.next();
+				
+				Calendar dataQueNasceu1 = Calendar.getInstance();
+				dataQueNasceu1.set(Calendar.DAY_OF_MONTH, diaDoNascimento);
+				dataQueNasceu1.set(Calendar.MONTH, mesDoNascimento - 1);
+				dataQueNasceu1.set(Calendar.YEAR, anoDoNascimento);				
+				
+				PessoaFisica pf = new PessoaFisica(cpf, nomePessoa, endereco, dataQueNasceu1, email, estadoCivil);
+				agendaPessoaFisica.add(pf);
+				
+				System.out.println("");
+				System.out.println("Pessoa Física cadastrada!");	
+				System.out.println("");
+				
+				break;
+				
+			case 2:
+				System.out.println("---------- Cadastro de Empresa ----------");
+				System.out.println("");
+				
+				System.out.print("Digite o Nome Fantasia da empresa: ");
+				nomeFantasia = scan2.nextLine();
+				
+				System.out.print("Digite o CNPJ da empresa: ");
+				cnpj = scan.next();
+				
+				System.out.print("Digite o Endereço da empresa: ");
+				enderecoEmpresa = scan2.nextLine();
+				
+				System.out.print("Digite o e-mail da empresa: ");
+				emailEmpresa = scan.next();
+				
+				System.out.print("Digite a Inscrição Estadual da empresa: ");
+				inscricaoEstadual = scan.next();
+				
+				System.out.print("Digite a Razão Social da empresa: ");
+				razaoSocial = scan.next();
+				
+				PessoaJuridica pj = new PessoaJuridica(cnpj, nomeFantasia, enderecoEmpresa, emailEmpresa, inscricaoEstadual, razaoSocial);
+				agendaEmpresas.add(pj);
+				
+				System.out.println("Empresa cadastrada!");
+				System.out.println("");
+				
+				break;
+				
+			case 3:
+				System.out.println("--------- Editar Pessoa Física ----------");
+				System.out.println("");
+				
+				System.out.print("Digite o CPF da Pessoa Física que deseja alterar um dado: ");
+				String editarPF = scan2.next();
+				for(i=0;i<agendaPessoaFisica.size();i++) {
+					if(editarPF.equals(agendaPessoaFisica.get(i).getCPF())) {
+						Integer escolha;
+						do{
+							System.out.println("");
+							System.out.println("CPF encontrado!");
+							System.out.println("Qual dado você deseja alterar? ");
+							System.out.println("");
+							System.out.println("1. Nome;");
+							System.out.println("2. Endereço;");
+							System.out.println("3. Data de Nascimento;");
+							System.out.println("4. E-mail;");
+							System.out.println("5. Estado Civil.");
+							System.out.println("");
+							System.out.println("6. Sair.");
+							System.out.println("");
+							System.out.print("Opção: ");
+							achouPessoa = true;
+							escolha = scan.nextInt();
+							switch(escolha){
+							case 1: 
+								System.out.println("");
+								System.out.print("Deseja alterar para qual nome? ");
+								String pularEspacoVazio = scan2.nextLine();
+								String newName = scan2.nextLine();
+							
+								agendaPessoaFisica.get(i).setNome(newName);
+							
+								System.out.println("");
+								System.out.println("Nome alterado com sucesso!");
+								System.out.println("");
+														
+								break;
+							
+							case 2: 	
+								System.out.println("");
+								System.out.print("Deseja alterar para qual endereço? ");
+								String pularEspacoVazio2 = scan2.nextLine();
+								String newAdress = scan2.nextLine();
+								
+								agendaPessoaFisica.get(i).setEndereco(newAdress);
+								
+								System.out.println("");
+								System.out.println("Endereço alterado com sucesso!");
+								System.out.println("");
+								
+								
+								break;
+							
+							case 3:	
+								System.out.println("");
+								System.out.println("Deseja alterar para qual Data de Nascimento? ");
+								System.out.print("Dia: ");
+								Integer newDay = scan.nextInt();
+								System.out.print("Mês: ");
+								Integer newMonth = scan.nextInt();
+								System.out.print("Ano: ");
+								Integer newYear = scan.nextInt();
+							
+								Calendar dataQueNasceu11 = Calendar.getInstance();
+								dataQueNasceu11.set(Calendar.DAY_OF_MONTH, newDay);
+								dataQueNasceu11.set(Calendar.MONTH, newMonth - 1);
+								dataQueNasceu11.set(Calendar.YEAR, newYear);
+							
+								agendaPessoaFisica.get(i).setDataDeNascimento(dataQueNasceu11);
+							
+								System.out.println("");
+								System.out.println("Data de Nascimento alterada com sucesso!");
+								System.out.println("");
+							
+								break;
+							
+							case 4:
+								System.out.println("");
+								System.out.print("Deseja alterar para qual e-mail? ");
+								String pularEspacoVazio4 = scan2.nextLine();
+								String newEmail = scan2.nextLine();
+							
+								agendaPessoaFisica.get(i).setEmail(newEmail);
+							
+								System.out.println("");
+								System.out.println("E-mail alterado com sucesso!");
+								System.out.println("");
+							
+								break;
+							
+							case 5:
+								System.out.println("");
+								System.out.print("Deseja alterar para qual estado civil? ");
+								String pularEspacoVazio5 = scan2.nextLine();
+								String newEstadoCivil = scan2.nextLine();
+							
+								agendaPessoaFisica.get(i).setEstadoCivil(newEstadoCivil);
+								
+								System.out.println("");
+								System.out.println("Estado Civil alterado com sucesso!");
+								System.out.println("");
+							
+								break;
+								
+							case 6:
+								System.out.println("");
+
+								break;
+								
+							default: 
+								System.err.println("Opção inválida!");
+							}
+						}while(escolha!=6);
+					}
+				}
+				
+				if(achouPessoa == false) {
+					System.out.println("");	
+					System.err.println("CPF não encontrado!");				
+					System.out.println("");	
+				}
+				break;
+				
+			case 4:
+				System.out.println("--------- Editar Empresa ----------");
+				System.out.println("");
+				
+				System.out.print("Digite o CNPJ da Empresa que deseja alterar um dado: ");
+				String editarPJ = scan2.next();
+				for(i=0;i<agendaEmpresas.size();i++) {
+					if(editarPJ.equals(agendaEmpresas.get(i).getCNPJ())) {
+						System.out.println("");
+						achouPessoa = true;
+						System.out.println("CNPJ encontrado!");
+						System.out.println("Qual dado você deseja alterar? ");
+						System.out.println("");
+						System.out.println("1. Nome Fantasia;");
+						System.out.println("2. Endereço;");
+						System.out.println("3. E-mail;");
+						System.out.println("4. Inscrição Estadual;");
+						System.out.println("5. Razão Social.");
+						System.out.println("");
+						System.out.print("Opção: ");
+						int escolha = scan.nextInt();
+
+						switch(escolha){
+						case 1: 
+							System.out.println("");
+							System.out.print("Deseja alterar para qual Nome Fantasia? ");
+							String pularEspacoVazio = scan2.nextLine();
+							String newName = scan2.nextLine();
+							
+							agendaEmpresas.get(i).setNome(newName);
+							
+							System.out.println("");
+							System.out.println("Nome Fantasia alterado com sucesso!");
+							System.out.println("");
+														
+							break;
+							
+						case 2: 	
+							System.out.println("");
+							System.out.print("Deseja alterar para qual Endereço? ");
+							String pularEspacoVazio2 = scan2.nextLine();
+							String newAdress = scan2.nextLine();
+							
+							agendaEmpresas.get(i).setEndereco(newAdress);
+							
+							System.out.println("");
+							System.out.println("Endereço alterado com sucesso!");
+							System.out.println("");
+							
+							
+							break;
+							
+						case 3:	
+							System.out.println("");
+							System.out.println("Deseja alterar para qual e-mail? ");
+							String newEmail = scan2.next();
+							
+							agendaEmpresas.get(i).setEmail(newEmail);
+							
+							System.out.println("");
+							System.out.println("E-mail alterada com sucesso!");
+							System.out.println("");
+							
+							break;
+							
+						case 4:
+							System.out.println("");
+							System.out.print("Deseja alterar para qual Inscrição Estadual? ");
+							String pularEspacoVazio4 = scan2.nextLine();
+							String newSub = scan2.nextLine();
+							
+							agendaEmpresas.get(i).setInscricaoEstadual(newSub);
+							
+							System.out.println("");
+							System.out.println("Inscrição Estadual alterada com sucesso!");
+							System.out.println("");
+							
+							break;
+							
+						case 5:
+							System.out.println("");
+							System.out.print("Deseja alterar para qual Razão Social? ");
+							String pularEspacoVazio5 = scan2.nextLine();
+							String newRazaoSocial = scan2.nextLine();
+							
+							agendaEmpresas.get(i).setRazaoSocial(newRazaoSocial);
+							
+							System.out.println("");
+							System.out.println("Razão Social alterada com sucesso!");
+							System.out.println("");
+							
+							break;
+						
+						default: 
+							System.err.println("Opção inválida!");
+						}
+					}
+				}
+				
+				if(achouPessoa == false) {
+					System.out.println("");	
+					System.err.println("CNPJ não encontrado!");				
+					System.out.println("");	
+				}
+				
+				break;
+				
+			case 5:
+				System.out.println("--------- Excluir Pessoa Física ----------");
+				System.out.println("");
+				
+				System.out.print("Digite o CPF da Pessoa Física que deseja excluir: ");
+				String editarPF2 = scan2.nextLine();
+				for(i=0;i<agendaPessoaFisica.size();i++) {
+					if(editarPF2.equals(agendaPessoaFisica.get(i).getCPF())) {
+						agendaPessoaFisica.remove(agendaPessoaFisica.get(i));
+						achouPessoa = true;
+						System.out.println("");
+						System.out.println("Pessoa Física excluída com sucesso!");
+						System.out.println("");
+						}
+				}
+				
+				if(achouPessoa == false) {
+					System.out.println("");	
+					System.err.println("CPF não encontrado!");				
+					System.out.println("");	
+				}
+				
+				break;
+				
+			case 6:
+				System.out.println("--------- Excluir Empresa ----------");
+				System.out.println("");
+				
+				System.out.print("Digite o CNPJ da Empresa que deseja excluir: ");
+				String editarPJ2 = scan2.next();
+				for(i=0;i<agendaEmpresas.size();i++) {
+					if(editarPJ2.equals(agendaEmpresas.get(i).getCNPJ())) {
+						agendaEmpresas.remove(agendaEmpresas.get(i));
+						achouPessoa = true;
+						System.out.println("");
+						System.out.println("Empresa excluída com sucesso!");
+						System.out.println("");
+						}
+				}
+				
+				if(achouPessoa == false) {
+					System.out.println("");	
+					System.err.println("CNPJ não encontrado!");				
+					System.out.println("");	
+				}
+				break;
+				
+			case 7:
+				System.out.println("--------- Pessoas Físicas Registradas ----------");
+				System.out.println("");
+				for(i=0;i<agendaPessoaFisica.size();i++) {
+					System.out.println("--- Pessoa " + (i+1) + " ---");
+					System.out.println("Nome Completo: " + agendaPessoaFisica.get(i).getNome());
+					System.out.println("CPF: " + agendaPessoaFisica.get(i).getCPF());
+					System.out.println("Endereço: " + agendaPessoaFisica.get(i).getEndereco());
+					System.out.println("Data de Nascimento: " + agendaPessoaFisica.get(i).dataDeNascimento.get(Calendar.DAY_OF_MONTH) + "/" + agendaPessoaFisica.get(i).dataDeNascimento.get(Calendar.MONTH + 1) + "/" + agendaPessoaFisica.get(i).dataDeNascimento.get(Calendar.YEAR));
+					System.out.println("E-mail: " + agendaPessoaFisica.get(i).getEmail());
+					System.out.println("Estado Civil: " + agendaPessoaFisica.get(i).getEstadoCivil());
+					System.out.println("");
+					}
+				
+				break;
+				
+			case 8:
+				System.out.println("--------- Empresas Cadastradas ----------");
+				System.out.println("");
+				for(i=0;i<agendaEmpresas.size();i++) {
+					System.out.println("--- Empresa " + (i+1) + " ---");
+					System.out.println("Nome da Empresa: " + agendaEmpresas.get(i).getNome());
+					System.out.println("CNPJ: " + agendaEmpresas.get(i).getCNPJ());
+					System.out.println("Endereço: " + agendaEmpresas.get(i).getEndereco());
+					System.out.println("E-mail: " + agendaEmpresas.get(i).getEmail());
+					System.out.println("Inscrição Estadual: " + agendaEmpresas.get(i).getInscricaoEstadual());
+					System.out.println("Razão Social: " + agendaEmpresas.get(i).getRazaoSocial());
+					System.out.println("");
+					}
+				
+				break;
+			
+			case 9:
+				System.out.println("Obrigado por usar o nosso sistema de dados!");
+				break;
+				
+			default:
+				System.err.println("Opção inválida!");
+				break;
+			}
+		}while(opcao!=9);
+	
+	
+	}
+
+}
