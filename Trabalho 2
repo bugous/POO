@@ -1,0 +1,1089 @@
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Scanner;
+
+public class Principal {
+
+	public static void main(String [] args) {
+		
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		@SuppressWarnings({ "unused", "resource" })
+		Scanner scan2 = new Scanner(System.in);
+		@SuppressWarnings({ "unused", "resource" })
+		Scanner scan3 = new Scanner(System.in);
+		
+		@SuppressWarnings("unused")
+		List<Cliente> listaCliente = new ArrayList<Cliente>();
+		@SuppressWarnings("unused")
+		List<Plano> listaPlano = new ArrayList<Plano>();
+		@SuppressWarnings("unused")
+		List<NumeroDeTelefone> listaNumeroDeTelefone= new ArrayList<NumeroDeTelefone>();
+		@SuppressWarnings("unused")
+		List<ChamadaTelefonicaOriginadaNaRede> listaChamadaTelefonicaOriginadaNaRede = new ArrayList<ChamadaTelefonicaOriginadaNaRede>();
+		
+		Integer franquiaT, i, opcao, escolha, escolhaP, diaDePagar;
+		String codigoT, descricaoT, name, adress, cpf, client, plan, numero;
+		Double valorMensalT, valorChamadaT;
+		Calendar dataQueAtivou, dataDeCancelar = null;
+		Boolean achou = false;
+		
+		
+		do {	
+			System.out.println("---------- Menu ----------");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("1. Tipo de Plano;");
+			System.out.println("2. Cliente;");
+			System.out.println("3. Número de Telefone;");
+			System.out.println("4. Chamada Originada;");
+			System.out.println("5. Relatórios;");
+			System.out.println("");
+			System.out.println("6. Sair;");
+			System.out.println("");
+			System.out.print("Digite a opção desejada: ");
+			
+			opcao = scan.nextInt();
+			System.out.println("");
+			
+				switch (opcao) {
+				case 1: 
+					System.out.println("-------- Tipo de Plano --------");
+					System.out.println("");
+					do {
+						System.out.println("");
+						System.out.println("1. Cadastrar;");
+						System.out.println("2. Alterar;");
+						System.out.println("3. Excluir;");
+						System.out.println("4. Listar;");
+						System.out.println("5. Pesquisar;");
+						System.out.println("");
+						System.out.println("6. Sair;");
+						System.out.println("");
+						System.out.print("Digite a opção desejada: ");
+						
+						escolha = scan.nextInt();
+						System.out.println("");
+						
+						switch(escolha) {
+							case 1:
+								System.out.println("------ Cadastro de Plano ------");
+								System.out.println("");							
+								
+								System.out.print("Digite o CÓDIGO do Plano: ");
+								codigoT = scan2.next();
+
+								System.out.print("Digite a DESCRIÇÃO do Plano: ");
+								descricaoT = scan3.nextLine();				
+								
+								System.out.print("Digite o VALOR MENSAL do Plano: ");
+								valorMensalT = scan.nextDouble();
+								
+								System.out.print("Digite a FRANQUIA(Minutos) do Plano: ");
+								franquiaT = scan.nextInt();
+								
+								System.out.print("Digite o VALOR DA CHAMADA do Plano: ");
+								valorChamadaT = scan.nextDouble();			
+								
+								Plano plan1 = new Plano(codigoT, descricaoT, valorMensalT, franquiaT, valorChamadaT);
+								listaPlano.add(plan1);
+								
+								System.out.println("");
+								System.out.println("Plano cadastrado!");	
+								System.out.println("");
+								
+								break;
+								
+							case 2:
+								achou = false;
+								
+								System.out.println("------ Alterar Plano ------");
+								System.out.println("");	
+								
+								System.out.print("Digite o CÓDIGO do Plano que deseja alterar: ");
+								String codigoAnalise = scan2.next();
+								
+								for(i=0;i<listaPlano.size();i++)
+									if(codigoAnalise.equals(listaPlano.get(i).getCodigo())) {
+										achou = true;
+										
+										System.out.println("Plano encontrado!");
+										do {
+											System.out.println("");
+											System.out.println("1. Descrição;");
+											System.out.println("2. Valor Mensal;");
+											System.out.println("3. Franquia;");
+											System.out.println("4. Valor da chamada;");
+											System.out.println("");
+											System.out.println("5. Sair;");
+											System.out.println("");
+											System.out.print("Digite o número do dado que deseja alterar: ");
+											
+											escolhaP = scan.nextInt();
+											System.out.println("");
+											
+											switch(escolhaP){
+											case 1:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual DESCRIÇÃO? ");
+												String newDescription = scan3.nextLine();
+											
+												listaPlano.get(i).setDescricao(newDescription);
+											
+												System.out.println("");
+												System.out.println("DESCRIÇÃO alterada com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 2:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual VALOR MENSAL? ");
+												Double newValorMensal = scan.nextDouble();
+											
+												listaPlano.get(i).setValorMensal(newValorMensal);
+											
+												System.out.println("");
+												System.out.println("VALOR MENSAL alterada com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 3:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual FRANQUIA? ");
+												Integer newFranquia = scan.nextInt();
+											
+												listaPlano.get(i).setFranquia(newFranquia);
+											
+												System.out.println("");
+												System.out.println("FRANQUIA alterada com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 4:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual VALOR DA CHAMADA? ");
+												Double newValorChamada = scan.nextDouble();
+											
+												listaPlano.get(i).setValorChamada(newValorChamada);
+											
+												System.out.println("");
+												System.out.println("VALOR DA CHAMADA alterado com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 5:
+												
+												break;
+												
+											default:
+												System.out.println("");
+												System.err.println("Opção inválida");
+												System.out.println("");
+												
+												break;
+											}
+										}while(escolhaP!=5);
+									}
+								
+								if(achou == false){
+									System.out.println("");
+									System.err.println("Código inválido ou inexistente!");
+									System.out.println("");
+								}
+								
+								break;
+								
+							case 3:
+								achou = false;
+								
+								System.out.println("------ Excluir Plano ------");
+								System.out.println("");
+								
+								System.out.print("Digite o CÓDIGO do Plano que deseja excluir: ");
+								String codigoE = scan2.next();
+								for(i=0;i<listaPlano.size();i++) {
+									if(codigoE.equals(listaPlano.get(i).getCodigo())) {
+										listaPlano.remove(listaPlano.get(i));
+										achou = true;
+										
+										System.out.println("");
+										System.out.println("Plano excluído com sucesso!");
+										System.out.println("");
+										}
+								}
+								
+								if(achou == false) {
+									System.out.println("");	
+									System.err.println("Código inválido ou inexistente!");			
+									System.out.println("");	
+								}
+								
+								break;
+								
+							case 4:
+								System.out.println("------ Listar Planos ------");
+								System.out.println("");
+								for(i=0;i<listaPlano.size();i++) {
+									System.out.println("--- Plano " + (i+1) + " ---");
+									System.out.println("Código: " + listaPlano.get(i).getCodigo());
+									System.out.println("Descrição: " + listaPlano.get(i).getDescricao());
+									System.out.println("Valor Mensal: R$" + listaPlano.get(i).getValorMensal());
+									System.out.println("Franquia: " + listaPlano.get(i).getFranquia() + " minutos");
+									System.out.println("Valor da Chamada:R$" + listaPlano.get(i).getValorChamada());
+									System.out.println("");
+									}								
+								
+								break;
+							
+							case 5:
+								System.out.println("------ Pesquisar Plano ------");
+								System.out.println("");
+								
+								System.out.print("Digite o CÓDIGO do Plano que deseja pesquisar: ");
+								String codigoP = scan2.next();
+								
+								for(i=0;i<listaPlano.size();i++) {
+									if(codigoP.equals(listaPlano.get(i).getCodigo())) {
+										achou = true;
+										
+										System.out.println("--- Plano " + (i+1) + " ---");
+										System.out.println("Código: " + listaPlano.get(i).getCodigo());
+										System.out.println("Descrição: " + listaPlano.get(i).getDescricao());
+										System.out.println("Valor Mensal: R$" + listaPlano.get(i).getValorMensal());
+										System.out.println("Franquia: " + listaPlano.get(i).getFranquia() + " minutos");
+										System.out.println("Valor da Chamada:R$" + listaPlano.get(i).getValorChamada());
+										System.out.println("");
+									}
+								}
+								
+								if(achou == false) {
+									System.out.println("");	
+									System.err.println("Código inválido ou inexistente!");			
+									System.out.println("");	
+								}
+								
+								break;
+								
+							case 6:
+								
+								break;
+								
+							default:
+								System.err.println("Opção inválida");
+								
+								break;
+						}
+					}while(escolha!=6);
+					
+					break;
+					
+				case 2:
+					System.out.println("-------- Cliente --------");
+					System.out.println("");
+					do {
+						System.out.println("");
+						System.out.println("1. Cadastrar;");
+						System.out.println("2. Alterar;");
+						System.out.println("3. Excluir;");
+						System.out.println("4. Listar;");
+						System.out.println("5. Pesquisar;");
+						System.out.println("");
+						System.out.println("6. Sair;");
+						System.out.println("");
+						System.out.print("Digite a opção desejada: ");
+						
+						escolha = scan.nextInt();
+						System.out.println("");
+						
+						switch(escolha) {
+							case 1:
+								System.out.println("------ Cadastro de Cliente ------");
+								System.out.println("");							
+								
+								System.out.print("Digite o CPF do Cliente: ");
+								cpf = scan3.nextLine();
+								
+								System.out.print("Digite o NOME do Cliente: ");
+								name = scan3.nextLine();
+
+								System.out.print("Digite o ENDEREÇO do Cliente: ");
+								adress = scan3.nextLine();				
+									
+								
+								Cliente client1 = new Cliente(cpf, name, adress);
+								listaCliente.add(client1);
+								
+								System.out.println("");
+								System.out.println("Cliente cadastradx!");	
+								System.out.println("");
+								
+								break;
+								
+							case 2:
+								achou = false;
+								
+								System.out.println("------ Alterar Cliente ------");
+								System.out.println("");	
+								
+								System.out.print("Digite o CPF do Cliente que deseja alterar: ");
+								String cpfAnalise = scan2.next();
+								
+								for(i=0;i<listaPlano.size();i++)
+									if(cpfAnalise.equals(listaCliente.get(i).getCPF())) {
+										achou = true;
+										
+										System.out.println("Cliente encontradx!");
+										do {
+											System.out.println("");
+											System.out.println("1. Nome;");
+											System.out.println("2. Endereço;");
+											System.out.println("");
+											System.out.println("3. Sair;");
+											System.out.println("");
+											System.out.print("Digite o número do dado que deseja alterar: ");
+											
+											escolhaP = scan.nextInt();
+											System.out.println("");
+											
+											switch(escolhaP){
+											case 1:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual Nome? ");
+												String newName = scan3.nextLine();
+											
+												listaCliente.get(i).setNome(newName);
+											
+												System.out.println("");
+												System.out.println("NOME alterada com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 2:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual ENDEREÇO? ");
+												String newAdress = scan3.nextLine();
+											
+												listaCliente.get(i).setEndereco(newAdress);
+											
+												System.out.println("");
+												System.out.println("ENDEREÇO alterada com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 3:
+												
+												break;
+												
+											default:
+												System.out.println("");
+												System.err.println("Opção inválida");
+												System.out.println("");
+												
+												break;
+											}
+										}while(escolhaP!=3);
+									}
+								
+								if(achou == false){
+									System.out.println("");
+									System.err.println("CPF inválido ou inexistente!");
+									System.out.println("");
+								}
+								
+								break;
+								
+							case 3:
+								achou = false;
+								
+								System.out.println("------ Excluir Cliente ------");
+								System.out.println("");
+								
+								System.out.print("Digite o CPF dx Cliente que deseja excluir: ");
+								String cpfE = scan2.next();
+								for(i=0;i<listaCliente.size();i++) {
+									if(cpfE.equals(listaCliente.get(i).getCPF())) {
+										listaCliente.remove(listaCliente.get(i));
+										achou = true;
+										
+										System.out.println("");
+										System.out.println("Cliente excluídx com sucesso!");
+										System.out.println("");
+										}
+								}
+								
+								if(achou == false) {
+									System.out.println("");	
+									System.err.println("CPF inválido ou inexistente!");			
+									System.out.println("");	
+								}
+								
+								break;
+								
+							case 4:
+								System.out.println("------ Listar Clientes ------");
+								System.out.println("");
+								for(i=0;i<listaCliente.size();i++) {
+									System.out.println("--- Cliente " + (i+1) + " ---");
+									System.out.println("CPF: " + listaCliente.get(i).getCPF());
+									System.out.println("Nome: " + listaCliente.get(i).getNome());
+									System.out.println("Endereço: " + listaCliente.get(i).getEndereco());
+									System.out.println("");
+									}								
+								
+								break;
+							
+							case 5:
+								System.out.println("------ Pesquisar Cliente ------");
+								System.out.println("");
+								
+								System.out.print("Digite o CPF dx Cliente que deseja pesquisar: ");
+								String cpfP = scan2.next();
+								
+								for(i=0;i<listaCliente.size();i++) {
+									if(cpfP.equals(listaCliente.get(i).getCPF())) {
+										achou = true;
+										
+										System.out.println("--- Cliente " + (i+1) + " ---");
+										System.out.println("CPF: " + listaCliente.get(i).getCPF());
+										System.out.println("Nome: " + listaCliente.get(i).getNome());
+										System.out.println("Endereço: " + listaCliente.get(i).getEndereco());
+										System.out.println("");
+										}	
+								}
+								
+								if(achou == false) {
+									System.out.println("");	
+									System.err.println("CPF inválido ou inexistente!");			
+									System.out.println("");	
+								}
+								
+								break;
+								
+							case 6:
+								
+								break;
+								
+							default:
+								System.err.println("Opção inválida");
+								
+								break;
+						}
+					}while(escolha!=6);
+					
+					break;
+					
+				case 3:
+					System.out.println("-------- Número de Telefone --------");
+					System.out.println("");
+					do {
+						System.out.println("");
+						System.out.println("1. Cadastrar;");
+						System.out.println("2. Alterar;");
+						System.out.println("3. Excluir;");
+						System.out.println("4. Cancelar;");			
+						System.out.println("5. Listar;");
+						System.out.println("6. Pesquisar;");
+						System.out.println("");
+						System.out.println("7. Sair;");
+						System.out.println("");
+						System.out.print("Digite a opção desejada: ");
+						
+						escolha = scan.nextInt();
+						System.out.println("");
+						
+						switch(escolha) {
+							case 1:
+								System.out.println("------ Cadastro de Número de Telefone ------");
+								System.out.println("");							
+								
+								System.out.print("Digite o NÚMERO do Telefone: ");
+								numero = scan3.nextLine();
+
+								System.out.print("Digite o CLIENTE que irá adquirir o Número dE Telefone: ");
+								client = scan3.nextLine();				
+								
+								System.out.print("Digite o PLANO do Telefone: ");
+								plan = scan3.nextLine();
+											
+								System.out.print("Digite o DIA da Ativação do Número: ");
+								Integer diaDaAtivacao = scan.nextInt();
+								
+								System.out.print("Digite o MÊS da Ativação do Número: ");
+								Integer mesDaAtivacao = scan.nextInt();
+								
+								System.out.print("Digite o ANO da Ativação do Número:");
+								Integer anoDaAtivacao = scan.nextInt();
+								
+								System.out.print("Digite a HORA da Ativação do Número:");
+								Integer horaDaAtivacao = scan.nextInt();
+																
+								System.out.print("Digite o MINUTO da Ativação do Número:");
+								Integer minutoDaAtivacao = scan.nextInt();
+								
+								System.out.print("Deseja escolher uma hora pra cancelar o número? ");
+								String resposta = scan2.next();
+								
+								System.out.print("Digite o DIA DE PAGAMENTO do Número(1, 5, 10 ou 15): ");
+								diaDePagar = scan.nextInt();		
+								
+								dataQueAtivou = Calendar.getInstance();
+								dataQueAtivou.set(Calendar.DAY_OF_MONTH, diaDaAtivacao);
+								dataQueAtivou.set(Calendar.MONTH, mesDaAtivacao - 1);
+								dataQueAtivou.set(Calendar.YEAR, anoDaAtivacao);
+								dataQueAtivou.set(Calendar.HOUR_OF_DAY, horaDaAtivacao);
+								dataQueAtivou.set(Calendar.MINUTE, minutoDaAtivacao);
+								dataQueAtivou.set(Calendar.SECOND, 0);
+								
+								dataDeCancelar  = null;
+								
+								NumeroDeTelefone num = new NumeroDeTelefone(numero, client, plan, dataQueAtivou, dataDeCancelar, diaDePagar);
+								listaNumeroDeTelefone.add(num);
+								
+								System.out.println("");
+								System.out.println("Número de Telefone cadastrado!");	
+								System.out.println("");
+								
+								break;
+								
+							case 2:
+								achou = false;
+								
+								System.out.println("------ Alterar Número de Telefone ------");
+								System.out.println("");	
+								
+								System.out.print("Digite o Número de Telefone que deseja alterar um dado: ");
+								String numeroAnalise = scan3.nextLine();
+								
+								for(i=0;i<listaPlano.size();i++)
+									if(numeroAnalise.equals(listaNumeroDeTelefone.get(i).getNumero())) {
+										achou = true;
+										
+										System.out.println("Número de Telefone encontrado!");
+										do {
+											System.out.println("");
+											System.out.println("1. Cliente");
+											System.out.println("2. Plano");
+											System.out.println("3. Data De Cancelamento;");
+											System.out.println("4. Dia de Pagamento;");
+											System.out.println("");
+											System.out.println("5. Sair;");
+											System.out.println("");
+											System.out.print("Digite o número do dado que deseja alterar: ");
+											
+											escolhaP = scan.nextInt();
+											System.out.println("");
+											
+											switch(escolhaP){
+											case 1:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual CLIENTE? ");
+												String newClient = scan3.nextLine();
+											
+												listaNumeroDeTelefone.get(i).setC(newClient);
+											
+												System.out.println("");
+												System.out.println("CLIENTE alteradx com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 2:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual Plano? ");
+												String newPlan = scan2.next();
+											
+												listaNumeroDeTelefone.get(i).setP(newPlan);
+											
+												System.out.println("");
+												System.out.println("PLANO alterado com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 3:
+												System.out.println("");
+												
+												System.out.print("Digite o DIA do Cancelamento do Número: ");
+												Integer diaDeCancelar = scan.nextInt();
+												
+												System.out.print("Digite o MÊS do Cancelamento do Número: ");
+												Integer mesDeCancelar = scan.nextInt();
+												
+												System.out.print("Digite o ANO do Cancelamento do Número:");
+												Integer anoDeCancelar = scan.nextInt();
+												
+												System.out.print("Digite a HORA do Cancelamento do Número:");
+												Integer horaDeCancelar = scan.nextInt();
+																				
+												System.out.print("Digite o MINUTO do Cancelamento do Número:");
+												Integer minutoDeCancelar = scan.nextInt();
+													
+												
+												dataDeCancelar = Calendar.getInstance();
+												dataDeCancelar.set(Calendar.DAY_OF_MONTH, diaDeCancelar);
+												dataDeCancelar.set(Calendar.MONTH, mesDeCancelar - 1);
+												dataDeCancelar.set(Calendar.YEAR, anoDeCancelar);
+												dataDeCancelar.set(Calendar.HOUR_OF_DAY, horaDeCancelar);
+												dataDeCancelar.set(Calendar.MINUTE, minutoDeCancelar);
+												dataDeCancelar.set(Calendar.SECOND, 0);
+											
+												listaNumeroDeTelefone.get(i).setDataHoraCancelamento(dataDeCancelar);
+											
+												System.out.println("");
+												System.out.println("DATA DE CANCELAMENTO alterada com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 4:
+												System.out.println("");
+												System.out.print("Deseja alterar para qual DIA DE PAGAMENTO(1, 5, 10 ou 15)? ");
+												Integer newDayPay = scan.nextInt();
+											
+												listaNumeroDeTelefone.get(i).setDiaPagamento(newDayPay);
+											
+												System.out.println("");
+												System.out.println("DIA DE PAGAMENTO alterado com sucesso!");
+												System.out.println("");
+												
+												break;
+												
+											case 5:
+												
+												break;
+												
+											default:
+												System.out.println("");
+												System.err.println("Opção inválida");
+												System.out.println("");
+												
+												break;
+											}
+										}while(escolhaP!=5);
+									}
+								
+								if(achou == false){
+									System.out.println("");
+									System.err.println("Número inválido ou inexistente!");
+									System.out.println("");
+								}
+								
+								break;
+								
+							case 3:
+								achou = false;
+								
+								System.out.println("------ Excluir Número de Telefone ------");
+								System.out.println("");
+								
+								System.out.print("Digite o Número do Telefone que deseja excluir: ");
+								String numeroE = scan2.next();
+								for(i=0;i<listaNumeroDeTelefone.size();i++) {
+									if(numeroE.equals(listaNumeroDeTelefone.get(i).getNumero())) {
+										listaNumeroDeTelefone.remove(listaNumeroDeTelefone.get(i));
+										achou = true;
+										
+										System.out.println("");
+										System.out.println("Número de Telefone excluído com sucesso!");
+										System.out.println("");
+										}
+								}
+								
+								if(achou == false) {
+									System.out.println("");	
+									System.err.println("Número inválido ou inexistente!");			
+									System.out.println("");	
+								}
+								
+								break;
+								
+							case 4:
+								achou = false;
+								
+								System.out.println("------ Cancelar Número de Telefone ------");
+								System.out.println("");
+								
+								System.out.print("Digite o Número do Telefone que deseja cancelar: ");
+								String numeroC = scan2.next();
+								for(i=0;i<listaNumeroDeTelefone.size();i++) {
+									if(numeroC.equals(listaNumeroDeTelefone.get(i).getNumero())) {
+											achou = true;
+											
+											System.out.println("");
+											System.out.println("Número de Telefone encontrado! ");
+								
+											System.out.print("Digite o DIA do Cancelamento do Número: ");
+											Integer diaDeCancelar = scan.nextInt();
+								
+											System.out.print("Digite o MÊS do Cancelamento do Número: ");
+											Integer mesDeCancelar = scan.nextInt();
+								
+											System.out.print("Digite o ANO do Cancelamento do Número:");
+											Integer anoDeCancelar = scan.nextInt();
+								
+											System.out.print("Digite a HORA do Cancelamento do Número:");
+											Integer horaDeCancelar = scan.nextInt();
+																
+											System.out.print("Digite o MINUTO do Cancelamento do Número:");
+											Integer minutoDeCancelar = scan.nextInt();
+									
+								
+											dataDeCancelar = Calendar.getInstance();
+											dataDeCancelar.set(Calendar.DAY_OF_MONTH, diaDeCancelar);
+											dataDeCancelar.set(Calendar.MONTH, mesDeCancelar - 1);
+											dataDeCancelar.set(Calendar.YEAR, anoDeCancelar);
+											dataDeCancelar.set(Calendar.HOUR_OF_DAY, horaDeCancelar);
+											dataDeCancelar.set(Calendar.MINUTE, minutoDeCancelar);
+											dataDeCancelar.set(Calendar.SECOND, 0);
+							
+											listaNumeroDeTelefone.get(i).setDataHoraCancelamento(dataDeCancelar);
+							
+											System.out.println("");
+											System.out.println("DATA DE CANCELAMENTO definida com sucesso!");
+											System.out.println("");
+									}
+								}
+								
+								if(achou == false) {
+									System.out.println("");	
+									System.err.println("Número inválido ou inexistente!");			
+									System.out.println("");	
+								}
+																			
+								break;
+								
+							case 5:
+								System.out.println("------ Listar Números de Telefone ------");
+								System.out.println("");
+								for(i=0;i<listaPlano.size();i++) {
+									System.out.println("--- Número " + (i+1) + " ---");
+									System.out.println("Número: " + listaNumeroDeTelefone.get(i).getNumero());
+									System.out.println("Cliente: " + listaNumeroDeTelefone.get(i).getC());
+									System.out.println("Plano: R$" + listaNumeroDeTelefone.get(i).getP());
+									System.out.println("Data/Hora da Ativação: " + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.DAY_OF_MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.YEAR) + " - " + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.HOUR_OF_DAY) + ":" + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.MINUTE) + ":00");
+									System.out.println("Data/Hora de Cancelamento: " + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.DAY_OF_MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.YEAR) + " - " + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.HOUR_OF_DAY) + ":" + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.MINUTE) + ":00");
+									System.out.println("Dia De Pagamento: " + listaNumeroDeTelefone.get(i).getDiaPagamento());
+									System.out.println("");
+									}								
+								break;
+							
+							case 6:
+								System.out.println("------ Pesquisar Número de Telefone ------");
+								System.out.println("");
+								
+								System.out.print("Digite o NÚMERO do Telefone que deseja pesquisar: ");
+								String numeroP = scan2.next();
+								
+								for(i=0;i<listaPlano.size();i++) {
+									if(numeroP.equals(listaNumeroDeTelefone.get(i).getNumero())) {
+										achou = true;
+										
+										System.out.println("--- Número " + (i+1) + " ---");
+										System.out.println("Número: " + listaNumeroDeTelefone.get(i).getNumero());
+										System.out.println("Cliente: " + listaNumeroDeTelefone.get(i).getC());
+										System.out.println("Plano: R$" + listaNumeroDeTelefone.get(i).getP());
+										System.out.println("Data/Hora da Ativação: " + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.DAY_OF_MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.YEAR) + " - " + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.HOUR_OF_DAY) + ":" + listaNumeroDeTelefone.get(i).dataHoraAtivacao.get(Calendar.MINUTE) + ":00");
+										System.out.println("Data/Hora de Cancelamento: " + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.DAY_OF_MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.MONTH) + "/" + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.YEAR) + " - " + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.HOUR_OF_DAY) + ":" + listaNumeroDeTelefone.get(i).dataHoraCancelamento.get(Calendar.MINUTE) + ":00");
+										System.out.println("Dia De Pagamento: " + listaNumeroDeTelefone.get(i).getDiaPagamento());
+										System.out.println("");
+									}
+								}
+								
+								if(achou == false) {
+									System.out.println("");	
+									System.err.println("Número inválido ou inexistente!");			
+									System.out.println("");	
+								}
+								
+								break;
+								
+							case 7:
+								
+								break;
+								
+							default:
+								System.err.println("Opção inválida");
+								
+								break;
+						}
+					}while(escolha!=7);
+					
+					break;
+				
+				case 4:
+					System.out.println("-------- Relatório --------");
+					System.out.println("");
+					
+					System.out.print("Digite o CPF do Cliente: ");
+					String cpfA = scan2.next();
+					
+					for(i<0;listaCliente.size();i++)
+					
+					break;
+					
+				case 6:
+					
+					break;
+					
+				default:
+					System.err.println("Opção inválida");
+					
+					break;
+			
+				}
+		}while(opcao!=6);
+	}
+}
+
+
+//Clase Cliente
+
+
+public class Cliente {
+	
+	private String CPF;
+	private String nome;
+	private String endereco;
+	
+	public Cliente() {
+		
+	}
+	
+	public Cliente(String CPF, String nome, String endereco) {
+		this.CPF = CPF;
+		this.nome = nome;
+		this.endereco = endereco;
+	}
+
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+	
+	
+}
+
+
+//Clase Plano
+
+
+public class Plano {
+	
+	private String codigo;
+	private String descricao;
+	private Double valorMensal;
+	private Integer franquia;
+	private Double valorChamada;
+	
+	public Plano() {
+		
+	}
+	
+	public Plano(String codigo, String descricao, Double valorMensal, Integer franquia, Double valorChamada) {
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.valorMensal = valorMensal;
+		this.franquia = franquia;
+		this.valorChamada =  valorChamada;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Double getValorMensal() {
+		return valorMensal;
+	}
+
+	public void setValorMensal(Double valorMensal) {
+		this.valorMensal = valorMensal;
+	}
+
+	public Integer getFranquia() {
+		return franquia;
+	}
+
+	public void setFranquia(Integer franquia) {
+		this.franquia = franquia;
+	}
+
+	public Double getValorChamada() {
+		return valorChamada;
+	}
+
+	public void setValorChamada(Double valorChamada) {
+		this.valorChamada = valorChamada;
+	}
+	
+	
+}
+
+
+//Classe Número De Telefone
+
+import java.util.Calendar;
+
+public class NumeroDeTelefone extends Cliente{
+	private String numero;
+	private String c;
+	private String p;
+	Calendar dataHoraAtivacao;
+	Calendar dataHoraCancelamento;
+	private Integer diaPagamento;
+	
+	
+public NumeroDeTelefone(String numero, String c, String p, Calendar dataHoraAtivacao, Calendar dataHoraCancelamento, Integer diaPagamento){
+		this.numero = numero;
+		this.c = c;
+		this.p = p;
+		this.dataHoraAtivacao = dataHoraAtivacao;
+		this.dataHoraCancelamento = dataHoraCancelamento;
+		this.diaPagamento = diaPagamento;
+	}
+
+public String getNumero() {
+	return numero;
+}
+
+public void setNumero(String numero) {
+	this.numero = numero;
+}
+
+public String getC() {
+	return c;
+}
+
+public void setC(String newClient) {
+	this.c = newClient;
+}
+
+public String getP() {
+	return p;
+}
+
+public void setP(String newPlan) {
+	this.p = newPlan;
+}
+
+public Calendar getDataHoraAtivacao() {
+	return dataHoraAtivacao;
+}
+
+public void setDataHoraAtivacao(Calendar dataHoraAtivacao) {
+	this.dataHoraAtivacao = dataHoraAtivacao;
+}
+
+public Calendar getDataHoraCancelamento() {
+	return dataHoraCancelamento;
+}
+
+public void setDataHoraCancelamento(Calendar dataHoraCancelamento) {
+	this.dataHoraCancelamento = dataHoraCancelamento;
+}
+
+public Integer getDiaPagamento() {
+	return diaPagamento;
+}
+
+public void setDiaPagamento(Integer diaPagamento) {
+	this.diaPagamento = diaPagamento;
+}
+
+
+}
+
+
+//Classe Chamada Telefônica Originada Na Rede
+
+import java.util.Calendar;
+
+public class ChamadaTelefonicaOriginadaNaRede {
+	private String numeroOrigem;
+	private String numeroDestino;
+	private Calendar dataHoraInicio;
+	private Calendar dataHoraFim;
+	
+	public ChamadaTelefonicaOriginadaNaRede(){
+		
+	}
+	
+	public ChamadaTelefonicaOriginadaNaRede(String numeroOrigem, String numeroDestino, Calendar dataHoraInicio, Calendar dataHoraFim){
+		this.numeroOrigem = numeroOrigem;
+		this.numeroDestino = numeroDestino;
+		this.dataHoraInicio = dataHoraInicio;
+		this.dataHoraFim = dataHoraFim;		
+	}
+
+	public String getNumeroOrigem() {
+		return numeroOrigem;
+	}
+
+	public void setNumeroOrigem(String numeroOrigem) {
+		this.numeroOrigem = numeroOrigem;
+	}
+
+	public String getNumeroDestino() {
+		return numeroDestino;
+	}
+
+	public void setNumeroDestino(String numeroDestino) {
+		this.numeroDestino = numeroDestino;
+	}
+
+	public Calendar getDataHoraInicio() {
+		return dataHoraInicio;
+	}
+
+	public void setDataHoraInicio(Calendar dataHoraInicio) {
+		this.dataHoraInicio = dataHoraInicio;
+	}
+
+	public Calendar getDataHoraFim() {
+		return dataHoraFim;
+	}
+
+	public void setDataHoraFim(Calendar dataHoraFim) {
+		this.dataHoraFim = dataHoraFim;
+	}
+	
+	
+}
+
