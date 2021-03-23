@@ -1,3 +1,109 @@
+/* A companhia telefônica Alô mantém dados de seus clientes,
+números de telefone ativados, tipos de planos e chamadas
+telefônicas.
+
+Tipo de Plano: código, descrição, valor mensal, franquia (minutos)
+e valor da chamada.
+
+Cliente: CPF, nome e endereço.
+
+Número de Telefone: número, cliente, plano, data/hora de
+ativação, data/hora de cancelamento e dia de pagamento.
+
+O dia de pagamento deve ser um dos seguintes dias do mês: 1, 5,
+10 ou 15.
+A data/hora de cancelamento é opcional.
+A data/hora de cancelamento deve ser superior à data/hora de
+ativação.
+A data/hora de cancelamento deve ser superior à data/hora mais
+recente de chamada originada pelo número registrada no sistema.
+Chamada Telefônica Originada na Rede: número de origem,
+número de destino, data/ hora de início da chamada, data/hora
+de fim de chamada.
+
+Número de origem deve ser um número ativo no sistema (ou seja,
+sem data de cancelamento informada).
+
+Número de destino pode não estar cadastrado no sistema, pois
+pode ser um número de outra operadora.
+A data/hora de fim de chamada deve ser superior à data/hora de
+início de chamada.
+As datas/horas de início e de fim da chamada devem ser iguais ou
+superiores à data/hora de ativação.
+
+
+O sistema para gerenciar chamadas telefônicas dessa operadora
+deverá prover as seguintes funcionalidades:
+
+
+Tipo de Plano:
+• Cadastrar: inclui um tipo de plano no sistema.
+• Alterar: permite alterar os dados de um tipo de plano. Todos
+os campos são alteráveis, exceto o código.
+• Excluir: exclui um tipo de plano do sistema, dada o seu
+código. Não é permitida a exclusão de tipo de plano que esteja
+relacionado a número telefônico.
+• Listar: lista todos os dados de todos os tipos de plano
+cadastrados.
+• Pesquisar: dado o código, exibe os dados do tipo de plano.
+
+Cliente:
+• Cadastrar: cadastra um cliente no sistema. Não é permitido
+o cadastro de cliente com CPF que já esteja cadastrado no sistema.
+• Alterar: permite alterar os dados de um cliente. Todos os
+campos são alteráveis, exceto o CPF.
+• Excluir: exclui um cliente do sistema. Não é permitida a
+exclusão de cliente que esteja associado a algum número de
+telefone.
+• Listar: lista os dados de todos os clientes cadastrados no
+sistema.
+• Pesquisar: dado o CPF do cliente, exibe os seus dados.
+
+Número de Telefone:
+• Cadastrar: permite cadastrar um número de telefone no
+sistema. Não é permitido o cadastro de telefone com número que
+esteja ativo no sistema. Um número está ativo quando não possui
+data de cancelamento informada.
+• Alterar: permite alterar os dados de um número de telefone.
+Todos os campos são alteráveis, exceto a data de ativação e o
+número do telefone.
+• Excluir: permite excluir um número de telefone do sistema.
+• Cancelar número: registra a data de cancelamento do
+número.
+• Listar: lista os dados de todos os números cadastrados no
+sistema.
+• Pesquisar: dado o número do telefone, exibe seus dados.
+
+Chamada Originada:
+• Registrar: permite registrar uma chamada originada. É
+permitido o registro de chamadas originadas somente para
+número ativo na data da chamada.
+• Alterar: permite alterar os dados de uma chamada originada.
+Esta opção também deverá observar a restrição de que é
+permitido o registro de chamadas originadas somente para
+número ativo na data da chamada.
+• Excluir: permite excluir uma chamada originada.
+• Listar: lista os dados de todas as chamadas cadastradas no
+sistema.
+• Pesquisar: dado o número de telefone, exibe os dados das
+chamadas originadas por ele.
+
+Relatórios:
+• Números telefônicos de um cliente
+O usuário informa um CPF de um cliente e o sistema exibe os
+dados dos telefones (ativos e cancelados) dele.
+• Conta de telefone
+O usuário informa o número de telefone e o mês/ano de
+referência. O sistema exibe os seguintes dados:
+- lista de chamadas originadas no mês, com suas respectivas
+durações e preços.
+- total de duração das chamadas
+- franquia em minutos do plano
+- minutos além da franquia
+- valor do plano
+- valor total a ser pago (soma do valor do plano e do valor
+referente aos minutos além da franquia) */
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -942,7 +1048,63 @@ public class Principal {
 									System.out.println("");
 									System.out.println("Cliente: " + listaNumeroDeTelefone.get(j).getC());
 									System.out.println("Número Do Telefone: " + listaNumeroDeTelefone.get(j).getNumero());
-									Integer y = j;
+									
+									System.out.println("");
+									System.out.println("--- Conta de Telefone ---");
+									System.out.println("");
+									
+									System.out.print("Digite o MÊS da Conta que será analisada: ");
+									Integer mesA = scan.nextInt();
+									
+									System.out.print("Digite o ANO da Conta que será analisada: ");
+									Integer anoA = scan.nextInt();
+									
+									for(o=0;o<listaChamadaTelefonicaOriginadaNaRede.size();o++) {
+										if(mesA.equals(listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.MONTH))) {
+											if(anoA.equals(listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.YEAR))) {
+																								
+														System.out.println("");
+														System.out.println("- Chamada " + k + " -");
+														System.out.println("");
+														System.out.println("Número de Origem: " + listaChamadaTelefonicaOriginadaNaRede.get(o).getNumeroOrigem());
+														System.out.println("Número de Destino: " + listaChamadaTelefonicaOriginadaNaRede.get(o).getNumeroDestino());
+														System.out.println("Data/hora de início da chamada: " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.DAY_OF_MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.YEAR) + " - " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.HOUR_OF_DAY) + ":" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.MINUTE) + ":00"); 
+														System.out.println("Data/hora de fim da chamada: " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.DAY_OF_MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.YEAR) + " - " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.HOUR_OF_DAY) + ":" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.MINUTE) + ":00");
+
+
+														
+														long minutosLigacao =  ((listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.getTimeInMillis() - listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.getTimeInMillis()) / 60000);
+
+														System.out.println("Duração total em minutos: " + minutosLigacao + " minutos.");																
+
+														for(l=0;l<listaPlano.size();l++) {
+															if(listaNumeroDeTelefone.get(j).getC().equals(listaPlano.get(l).getCodigo())) {	
+														
+														minutosResto = listaPlano.get(l).getFranquia();
+														listaPlano.get(l).setFranquia(minutosResto - minutosLigacao);
+														
+
+														if(minutosResto>0) {
+															System.out.println("Custo desta chamada: Zero, pois está incluso na franquia.");	
+														}
+														
+														if(minutosResto<0) {
+															listaPlano.get(l).setFranquia((long) (minutosResto * (-1) * listaPlano.get(l).getValorChamada()));
+															System.out.println("Custo desta chamada: " + listaPlano.get(l).getFranquia()+ " reais.");	
+														}
+													}
+														System.out.println("Valor do plano: " + listaPlano.get(l).getValorChamada() + " reais.");	
+														System.out.println("Valor total: " + (listaPlano.get(l).getFranquia() + listaPlano.get(l).getValorChamada()) + " reais.");	
+												}
+												
+
+												k++;
+												System.out.println("");	
+											}
+										}
+									}
+									
+									
 								}								
 							}
 														
@@ -958,56 +1120,6 @@ public class Principal {
 						
 					}
 										
-					System.out.println("");
-					System.out.println("--- Conta de Telefone ---");
-					System.out.println("");
-					
-					System.out.print("Digite o MÊS da Conta que será analisada: ");
-					Integer mesA = scan.nextInt();
-					
-					System.out.print("Digite o ANO da Conta que será analisada: ");
-					Integer anoA = scan.nextInt();
-					
-					for(o=0;o<listaChamadaTelefonicaOriginadaNaRede.size();o++) {
-						if(mesA.equals(listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.MONTH))) {
-							if(anoA.equals(listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.YEAR))) {
-								for(l=0;l<listaPlano.size();l++) {
-									if(listaNumeroDeTelefone.get(j).getC().equals(listaPlano.get(l).getCodigo())) {	
-								
-										long minutosLigacao =  ((listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.getTimeInMillis() - listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.getTimeInMillis()) / 60000);
-
-								
-										System.out.println("");
-										System.out.println("- Chamada " + k + " -");
-										System.out.println("");
-										System.out.println("Número de Origem: " + listaChamadaTelefonicaOriginadaNaRede.get(o).getNumeroOrigem());
-										System.out.println("Número de Destino: " + listaChamadaTelefonicaOriginadaNaRede.get(o).getNumeroDestino());
-										System.out.println("Data/hora de início da chamada: " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.DAY_OF_MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.YEAR) + " - " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.HOUR_OF_DAY) + ":" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraInicio.get(Calendar.MINUTE) + ":00"); 
-										System.out.println("Data/hora de fim da chamada: " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.DAY_OF_MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.MONTH) + "/" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.YEAR) + " - " + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.HOUR_OF_DAY) + ":" + listaChamadaTelefonicaOriginadaNaRede.get(o).dataHoraFim.get(Calendar.MINUTE) + ":00");
-										System.out.println("Duração total em minutos: " + minutosLigacao + " minutos.");																
-
-										minutosResto = listaPlano.get(l).getFranquia();
-										listaPlano.get(l).setFranquia(minutosResto - minutosLigacao);
-										
-										if(listaPlano.get(l).getFranquia()>0) {
-											System.out.println("Custo desta chamada: Zero, pois está incluso na franquia.");	
-										}
-										
-										if(listaPlano.get(l).getFranquia()<0) {
-											listaPlano.get(l).setFranquia((long) (minutosResto * (-1) * listaPlano.get(l).getValorChamada()));
-											System.out.println("Custo desta chamada: " + listaPlano.get(l).getFranquia()+ " reais.");	
-										}
-									}
-								}
-								
-									System.out.println("Valor do plano: " + listaPlano.get(l).getValorChamada() + " reais.");	
-									System.out.println("Valor total: " + (listaPlano.get(l).getFranquia() + listaPlano.get(l).getValorChamada()) + " reais.");	
-								k++;
-								System.out.println("");	
-							}
-						}
-					}
-					
 					
 									
 					break;
@@ -1027,6 +1139,7 @@ public class Principal {
 		}while(opcao!=6);
 	}
 }
+
 
 
 
