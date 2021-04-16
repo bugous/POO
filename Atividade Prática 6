@@ -1,3 +1,25 @@
+/* 1) Crie uma agenda de contatos. Nessa agenda, contatos podem ser adicionados, removidos,
+ou pesquisados por nome ou por CPF/CNPJ. Deve ser possível, também, visualizar todos os
+contatos da agenda. Dois tipos de contatos podem fazer parte da agenda: pessoa física e
+pessoa jurídica. A pessoa física possui os seguintes atributos: CPF, nome, endereço, data de
+nascimento, email, estado civil, outros que você achar necessários. A pessoa jurídica possui:
+CNPJ, nome, endereço, email, inscrição estadual, razão social, outros que vc achar necessários.
+
+a) Na classe agenda acima, implemente uma opção no menu que permita editar uma
+pessoa física ou jurídica. O usuário deverá informar o CPF (no caso de pessoa física) ou
+CNPJ (no caso de pessoa jurídica) que será editado/alterado. Após encontrar a pessoa
+desejada, o usuário deverá selecionar o atributo que será modificado (ex. estado civil)
+e informará o novo valor do mesmo.
+b) A agenda de contatos deverá validar o CPF ou CNPJ para uma dada pessoa. Em outras
+palavras, não serão aceitos CPF ou CNPJ inválido. Caso for informado valores inválidos
+para estes atributos, o programa deverá informar ao usuário que o número do
+documento é inválido e deverá pedir que o usuário informe um número de documento
+válido para CPF (no caso de pessoa física) ou CNPJ (no caso de pessoa jurídica). Para
+isso, você deverá implementar essa lógica de validação no sistema. O código abaixo
+poderá ser reusado para este intuito:
+https://gist.github.com/rdakar/bbcf2262db572ddffd65ba26ddd42e80 */
+
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
