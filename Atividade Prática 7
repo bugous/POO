@@ -1,0 +1,281 @@
+/* Implemente em Java um sistema para controle de entrada de pessoas em um prédio.
+Cada pessoa apresenta um documento na portaria. Um documento pode ser uma
+carteira de identidade, um CPF ou um título de eleitor. O sistema é formado pelas
+seguintes classes:
+
+Classe Documento:
+ Método abstrato para obter o documento. As informações sobre o
+documento devem ser retornadas como uma única string.
+Classe DocumentoEstadual (subclasse de Documento)
+ Classe abstrata sem atributos e métodos.
+Classe DocumentoFederal (subclasse de Documento)
+ Classe abstrata sem atributos e métodos.
+
+Classe Identidade:
+ Atributos: número (tipo String) e estado (tipo String). Todos os atributos
+são privados.
+ Método construtor para inicializar os atributos com valores passados por
+parâmetros.
+ Método para obter o documento. Concretização do método abstrato de
+Documento. Retorna a identidade (número e estado) como uma única
+string concatenada.
+Classe CPF (subclasse de DocumentoFederal):
+
+ Atributo: número (tipo String). Atributo privado.
+ Método construtor para inicializar o atributo com o valor passado por
+parâmetro.
+ Método para obter o documento. Concretização do método abstrato de
+Documento. Retorna o número do CPF como uma string.
+Classe TituloEleitor:
+
+ Atributos: número (tipo String), zona (tipo String) e seção (tipo String).
+Todos os atributos são privados.
+ Método construtor para inicializar os atributos com valores passados por
+parâmetros.
+ Método para obter o documento. Concretização do método abstrato de
+Documento. Retorna o título de eleitor (número, zona e seção) como uma
+única string.
+
+Classe Pessoa:
+ Atributos: nome (tipo String) e documento (tipo Documento).
+ Método construtor para inicializar os atributos. Parâmetros: nome e
+documento.
+ Método get para obter o nome e o documento (em forma de String).
+
+Classe Portaria:
+ Método main para executar as seguintes ações:
+ Criar uma lista, usando ArrayList, e inserir três pessoas, cada uma com um
+tipo de documento diferente: identidade, cpf e título de eleitor.
+ Imprimir a relação das pessoas (nome e documento) que passaram pela
+portaria. */
+
+// Classe Portaria ( principal )
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Portaria {
+	
+	private static List<Pessoa> pessoas = new ArrayList<Pessoa>();
+	
+	public static void main(String[] args) {
+		
+		CPF cpfP1 = new CPF("000.000.000-00");		
+		
+		Pessoa p1 = new Pessoa();
+		p1.setNome("Cleberson da Silva");
+		p1.setDocumento(cpfP1);
+		
+		Identidade idP2 = new Identidade("00.000.000", "MG");
+		
+		Pessoa p2 = new Pessoa();
+		p2.setNome("João");
+		p2.setDocumento(idP2);
+		
+		TituloDeEleitor tituloP3 = new TituloDeEleitor("00000000", "00", "000");
+		
+		Pessoa p3 = new Pessoa();
+		p3.setNome("Maria");
+		p3.setDocumento(tituloP3);
+
+		
+		pessoas.add(p1);
+		pessoas.add(p2);
+		pessoas.add(p3);
+		
+		Pessoa pessoa = null;
+		for(int i=0;i < pessoas.size();i++) {
+			pessoa = pessoas.get(i);
+			System.out.println(pessoa.getDocumentoInfo());
+		}
+	}
+}
+
+// Classe Documentos
+
+
+public abstract class Documento {
+	
+	public abstract String getNumeroDocumento();
+	
+}
+
+
+// Classe DocumentoFederal
+
+public abstract class DocumentoFederal extends Documento {
+
+}
+
+
+// Classe DocumentoEstadual
+
+
+public abstract class DocumentoEstadual extends Documento {
+		
+}
+
+
+// Classe CPF
+
+
+public class CPF extends DocumentoFederal{
+
+	public String numero;
+	
+	public CPF() {}
+	
+	public CPF(String numero) {
+		super();
+		this.numero = numero;
+	}
+	
+	
+	@Override
+	public String getNumeroDocumento() {
+		return numero;
+	}
+	
+	
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+		
+	
+	
+}
+
+
+// Classe Identidade
+
+public class Pessoa {
+
+	private String nome;
+	private Documento documento;
+	
+	public Pessoa() {}
+	
+	public Pessoa(String nome, Documento documento) {
+		super();
+		this.nome = nome;
+		this.documento = documento;
+		
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Documento getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(Documento documento) {
+		this.documento = documento;
+	}
+	
+	public String getDocumentoInfo() {
+		return nome + ": " + documento.getNumeroDocumento();
+	}
+	
+}
+
+
+// Classe Título de Eleitor
+
+public class TituloDeEleitor extends DocumentoFederal{
+
+	private String numero;
+	private String zona;
+	private String secao;
+	
+	public TituloDeEleitor() {}
+	
+	public TituloDeEleitor(String numero, String zona, String secao) {
+		super();
+		this.numero = numero;
+		this.zona = zona;
+		this.secao = secao;
+		
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public String getSecao() {
+		return secao;
+	}
+
+	public void setSecao(String secao) {
+		this.secao = secao;
+	}
+
+	@Override
+	public String getNumeroDocumento() {
+		return numero + " - " + zona + " - " + secao;
+	}
+	
+	
+	
+}
+
+
+// Classe Pessoa
+
+public class Pessoa {
+
+	private String nome;
+	private Documento documento;
+	
+	public Pessoa() {}
+	
+	public Pessoa(String nome, Documento documento) {
+		super();
+		this.nome = nome;
+		this.documento = documento;
+		
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Documento getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(Documento documento) {
+		this.documento = documento;
+	}
+	
+	public String getDocumentoInfo() {
+		return nome + ": " + documento.getNumeroDocumento();
+	}
+	
+}
