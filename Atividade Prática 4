@@ -1,0 +1,825 @@
+/* 2. O sistema de controle de vendas de uma loja necessita gerenciar dados de produtos,
+vendedores e clientes, dentre outros.
+
+Implemente uma classe Produto. A classe deverá possuir os seguintes atributos:
+- código
+- descrição
+- preço
+- quantidade em estoque
+
+A classe deverá possui um método que permita realizar baixa de estoque. Este
+método recebe como parâmetro a quantidade a ser retirada do estoque. Caso a
+quantidade informada seja superior à existente em estoque, a operação não deverá
+ser realizada. Caso contrário, a quantidade disponível em estoque deverá ser
+atualizada.
+
+A classe deverá possuir um método para registrar entrada da mercadoria em
+estoque. Este método recebe como parâmetro a quantidade a ser incluída no
+estoque e, então, atualiza a quantidade disponível no estoque.
+
+Implemente uma classe Vendedor. A classe deverá possuir os seguintes atributos:
+- matrícula
+- nome
+- salário
+
+Implemente uma classe Cliente. A classe deverá possuir os seguintes atributos:
+- código
+- nome
+- endereço
+- telefone
+- tipo (cliente comum ou cliente especial)
+
+Implemente uma aplicação que crie e manipule (altere os dados e os exiba) de três
+objetos de cada uma das classes. O programa deverá exibir os dados do produto que
+possui menor quantidade em estoque. */
+
+// Classe Principal
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Principal {
+	
+
+	public static void main(String[] args) {
+		
+		Scanner scan = new Scanner(System.in);
+		Scanner scan2 = new Scanner(System.in);
+		
+		List<Vendedor> listaVendedor = new ArrayList<Vendedor>();
+		List<Produto> listaProduto = new ArrayList<Produto>();
+		List<Cliente> listaCliente = new ArrayList<Cliente>();
+		
+		Integer opcao, escolha, estoqueP, i, escolhaP, escolhaC, escolhaV;
+		String tipoC, telefoneC, enderecoC, nomeC, codigoC, codigoP, descricaoP, editP, editV, editC, excluirP, excluirV, excluirC, matriculaV, nomeV;
+		Double precoP, salarioV;
+		Boolean achou;		
+		
+		do {	
+			achou = false;
+			System.out.println("---------- Menu ----------");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("1. Produto;");
+			System.out.println("2. Vendedor;");
+			System.out.println("3. Cliente;");
+			System.out.println("");
+			System.out.println("0. Sair;");
+			System.out.println("");
+			System.out.print("Digite a opção desejada: ");
+			
+			opcao = scan.nextInt();
+			System.out.println("");
+			
+		
+			switch (opcao) {
+			case 1:
+								
+				System.out.println("---------- Produtos ----------");
+				System.out.println("");
+				System.out.println("");
+				
+				do {
+					
+					System.out.println("1. Cadastrar;");
+					System.out.println("2. Editar;");
+					System.out.println("3. Excluir;");
+					System.out.println("4. Listar;");
+					System.out.println("");
+					System.out.println("0. Sair");
+					
+					System.out.println("");
+					System.out.print("Opção: ");
+					
+					escolha = scan.nextInt();
+					
+					switch (escolha) {
+					case 1:
+						
+						System.out.println("---------- Cadastro de Produto ----------");
+						System.out.println("");
+						
+						System.out.print("Digite o CÓDIGO do produto: ");
+						codigoP = scan.next();
+
+						System.out.print("Digite a DESCRIÇÃO do produto: ");
+						descricaoP = scan2.nextLine();				
+						
+						System.out.print("Digite o PREÇO do produto: ");
+						precoP = scan.nextDouble();
+						
+						System.out.print("Digite o ESTOQUE do produto: ");
+						estoqueP = scan.nextInt();
+						
+
+						Produto produt = new Produto(codigoP, descricaoP, precoP, estoqueP);
+						listaProduto.add(produt);
+						
+						System.out.println("");
+						System.out.println("Produto cadastrado!");	
+						System.out.println("");
+						
+						break;
+						
+					case 2: 	
+						System.out.println("---------- Editar Produto ----------");
+						System.out.println("");
+						
+						System.out.print("Digite o CÓDIGO do produto que deseja alterar: ");
+						editP = scan2.next();
+						
+						for(i=0;i<listaProduto.size();i++) {
+							if(editP.equals(listaProduto.get(i).getCodigo())) {
+								System.out.println("");
+								achou = true;
+								System.out.println("Produto encontrado!");
+								System.out.println("Qual dado você deseja alterar? ");
+								System.out.println("");
+								System.out.println("1. Descrição;");
+								System.out.println("2. Preço;");
+								System.out.println("3. Estoque;");
+								System.out.println("");
+								System.out.println("0. Sair.");
+								System.out.println("");
+								System.out.print("Opção: ");
+								escolhaP = scan.nextInt();
+
+								switch(escolhaP){
+								case 1: 
+									System.out.println("");
+									System.out.print("Deseja alterar para qual DESCRIÇÃO? ");
+									String pularEspacoVazio = scan2.nextLine();
+									String newDescription = scan2.nextLine();
+									
+									listaProduto.get(i).setDescricao(newDescription);
+									
+									System.out.println("");
+									System.out.println("Descrição alterada com sucesso!");
+									System.out.println("");
+																
+									break;
+									
+								case 2: 	
+									System.out.println("");
+									System.out.print("Deseja alterar para qual PREÇO? ");
+									Double newValor = scan.nextDouble();
+									
+									listaProduto.get(i).setPreco(newValor);
+									
+									System.out.println("");
+									System.out.println("Preço alterado com sucesso!");
+									System.out.println("");
+																		
+									break;
+									
+								case 3:	
+									System.out.println("");
+									System.out.println("Deseja alterar para qual ESTOQUE? ");
+									Integer newEstoque = scan.nextInt();
+									
+									listaProduto.get(i).setEstoque(newEstoque);
+									
+									System.out.println("");
+									System.out.println("Estoque alterada com sucesso!");
+									System.out.println("");
+									
+									break;
+									
+								case 0:
+									
+									break;
+									
+								default: 
+									System.err.println("Opção inválida!");
+								}
+							}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Código não encontrado!");				
+							System.out.println("");	
+						}
+						
+						break;
+						
+					case 3:
+						System.out.println("---------- Excluir Produto ----------");
+						System.out.println("");
+						
+						System.out.print("Digite o CÓDIGO do produto que deseja excluir: ");
+						excluirP = scan2.next();
+						
+						for(i=0;i<listaProduto.size();i++) {
+							if(excluirP.equals(listaProduto.get(i).getCodigo())) {
+								listaProduto.remove(listaProduto.get(i));
+								achou = true;
+								System.out.println("");
+								System.out.println("Produto excluído com sucesso!");
+								System.out.println("");
+								}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Código não encontrado!");				
+							System.out.println("");	
+						}
+						
+						break;
+						
+					case 4:
+						System.out.println("--------- ProdutosCadastrados ----------");
+						System.out.println("");
+						for(i=0;i<listaProduto.size();i++) {
+							System.out.println("--- Produto " + (i+1) + " ---");
+							System.out.println("Código: " + listaProduto.get(i).getCodigo());
+							System.out.println("Descrição: " + listaProduto.get(i).getDescricao());
+							System.out.println("Preço: R$" + listaProduto.get(i).getPreco());
+							System.out.println("Estoque: " + listaProduto.get(i).getEstoque());
+							System.out.println("");
+							}
+						
+						
+						break;
+						
+					case 0:
+						
+						
+						break;
+						
+					default:
+						System.out.println("");	
+						System.err.println("Opção inválida!");				
+						System.out.println("");	
+						
+						break;
+					}
+								
+				}while(escolha!=0);
+				
+				break;
+				
+			case 2:
+				System.out.println("---------- Vendedor(a) ----------");
+				System.out.println("");
+				System.out.println("");
+				
+				do {
+					
+					System.out.println("1. Cadastrar;");
+					System.out.println("2. Editar;");
+					System.out.println("3. Excluir;");
+					System.out.println("4. Listar;");
+					System.out.println("");
+					System.out.println("0. Sair.");
+					
+					System.out.println("");
+					System.out.print("Opção: ");
+					
+					escolha = scan.nextInt();
+					
+					switch (escolha) {
+					case 1:
+						
+						System.out.println("---------- Cadastro de Vendedor(a) ----------");
+						System.out.println("");
+						
+						System.out.print("Digite a MATRÍCULA dx vendedor(x): ");
+						matriculaV = scan.next();
+
+						System.out.print("Digite o NOME dx vendedor(a): ");
+						nomeV = scan2.nextLine();				
+						
+						System.out.print("Digite o SALÁRIO dx vendedor(a): ");
+						salarioV = scan.nextDouble();
+												
+
+						Vendedor venda = new Vendedor(matriculaV, nomeV, salarioV);
+						listaVendedor.add(venda);
+						
+						System.out.println("");
+						System.out.println("Vendedor(a) cadastradx!");	
+						System.out.println("");
+						
+						break;
+						
+					case 2: 	
+						System.out.println("---------- Editar Vendedor(a) ----------");
+						System.out.println("");
+						
+						System.out.print("Digite a MATRÍCULA dx vendedor(a) que deseja alterar: ");
+						editV = scan2.next();
+						
+						for(i=0;i<listaVendedor.size();i++) {
+							if(editV.equals(listaVendedor.get(i).getMatricula())) {
+								System.out.println("");
+								achou = true;
+								System.out.println("Vendedor(a) encontradx!");
+								System.out.println("Qual dado você deseja alterar? ");
+								System.out.println("");
+								System.out.println("1. Nome;");
+								System.out.println("2. Salário;");
+								System.out.println("");
+								System.out.println("0. Sair");
+								System.out.println("");
+								System.out.print("Opção: ");
+								escolhaV = scan.nextInt();
+
+								switch(escolhaV){
+								case 1: 
+									System.out.println("");
+									System.out.print("Deseja alterar para qual NOME? ");
+									String pularEspacoVazio = scan2.nextLine();
+									String newName = scan2.nextLine();
+									
+									listaVendedor.get(i).setNome(newName);
+									
+									System.out.println("");
+									System.out.println("Nome alterado com sucesso!");
+									System.out.println("");
+																
+									break;
+									
+								case 2: 	
+									System.out.println("");
+									System.out.print("Deseja alterar para qual SALÁRIO? ");
+									Double newSalario = scan.nextDouble();
+									
+									listaVendedor.get(i).setSalario(newSalario);
+									
+									System.out.println("");
+									System.out.println("Salário alterado com sucesso!");
+									System.out.println("");
+																		
+									break;
+									
+					
+								case 0:
+									
+									break;
+									
+								default: 
+									System.err.println("Opção inválida!");
+								}
+							}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Matrícula não encontrada!");				
+							System.out.println("");	
+						}
+						
+						break;
+						
+					case 3:
+						System.out.println("---------- Excluir Vendedor ----------");
+						System.out.println("");
+						
+						System.out.print("Digite a MATRÍCULA dx vendedor(a) que deseja excluir: ");
+						excluirV = scan2.next();
+						
+						for(i=0;i<listaVendedor.size();i++) {
+							if(excluirV.equals(listaVendedor.get(i).getMatricula())) {
+								listaVendedor.remove(listaVendedor.get(i));
+								achou = true;
+								System.out.println("");
+								System.out.println("Vendedor(a) excluídx com sucesso!");
+								System.out.println("");
+								}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Matrícula não encontrada!");				
+							System.out.println("");	
+						}
+						
+						break;
+						
+					case 4:
+						System.out.println("--------- Vendedores Cadastrados ----------");
+						System.out.println("");
+						for(i=0;i<listaProduto.size();i++) {
+							System.out.println("--- Vendedor " + (i+1) + " ---");
+							System.out.println("Matrícula: " + listaVendedor.get(i).getMatricula());
+							System.out.println("Nome: " + listaVendedor.get(i).getNome());
+							System.out.println("Salário: R$" + listaVendedor.get(i).getSalario());
+
+							System.out.println("");
+							}
+						
+						
+						break;
+						
+					case 0:
+						
+						
+						break;
+						
+					default:
+						System.out.println("");	
+						System.err.println("Opção inválida!");				
+						System.out.println("");	
+						
+						break;
+					}
+								
+				}while(escolha!=0);
+				
+				
+				break;
+				
+			case 3: 
+				System.out.println("---------- Cliente ----------");
+				System.out.println("");
+				System.out.println("");
+				
+				do {
+					
+					System.out.println("1. Cadastrar;");
+					System.out.println("2. Editar;");
+					System.out.println("3. Excluir;");
+					System.out.println("4. Listar;");
+					System.out.println("");
+					System.out.println("0. Sair.");
+					
+					System.out.println("");
+					System.out.print("Opção: ");
+					
+					escolha = scan.nextInt();
+					
+					switch (escolha) {
+					case 1:
+						
+						System.out.println("---------- Cadastro de Cliente ----------");
+						System.out.println("");
+						
+						System.out.print("Digite o CÓDIGO do cliente: ");
+						codigoC = scan.next();
+
+						System.out.print("Digite o NOME do cliente: ");
+						nomeC = scan2.nextLine();				
+						
+						System.out.print("Digite o ENDEREÇO do cliente: ");
+						enderecoC = scan2.nextLine();
+						
+						System.out.print("Digite o TELEFONE do cliente: ");
+						telefoneC = scan2.nextLine();
+						
+						System.out.print("Digite o TIPO do cliente(comum ou especial): ");
+						tipoC = scan2.next();
+												
+
+						Cliente client = new Cliente(codigoC, nomeC, enderecoC, telefoneC, tipoC);
+						listaCliente.add(client);
+						
+						System.out.println("");
+						System.out.println("Cliente cadastradx!");	
+						System.out.println("");
+						
+						break;
+						
+					case 2: 	
+						System.out.println("---------- Editar Cliente ----------");
+						System.out.println("");
+						
+						System.out.print("Digite o CÓDIGO do Cliente que deseja alterar: ");
+						editC = scan2.next();
+						
+						for(i=0;i<listaCliente.size();i++) {
+							if(editC.equals(listaCliente.get(i).getCodigo())) {
+								System.out.println("");
+								achou = true;
+								System.out.println("Cliente encontradx!");
+								System.out.println("Qual dado você deseja alterar? ");
+								System.out.println("");
+								System.out.println("1. Nome;");
+								System.out.println("2. Endereço;");
+								System.out.println("3. Telefone;");
+								System.out.println("4. Tipo;");
+								System.out.println("");
+								System.out.println("0. Sair");
+								System.out.println("");
+								System.out.print("Opção: ");
+								escolhaC = scan.nextInt();
+
+								switch(escolhaC){
+								case 1: 
+									System.out.println("");
+									System.out.print("Deseja alterar para qual NOME? ");
+									String pularEspacoVazio = scan2.nextLine();
+									String newNameC = scan2.nextLine();
+									
+									listaCliente.get(i).setNome(newNameC);
+									
+									System.out.println("");
+									System.out.println("Nome alterado com sucesso!");
+									System.out.println("");
+																
+									break;
+									
+								case 2: 	
+									System.out.println("");
+									System.out.print("Deseja alterar para qual ENDEREÇO? ");
+									String newAdress = scan2.nextLine();
+									
+									listaCliente.get(i).setEndereco(newAdress);
+									
+									System.out.println("");
+									System.out.println("Endereço alterado com sucesso!");
+									System.out.println("");
+																		
+									break;
+									
+								case 3: 	
+									System.out.println("");
+									System.out.print("Deseja alterar para qual TELEFONE? ");
+									String newTel = scan2.nextLine();
+									
+									listaCliente.get(i).setTelefone(newTel);
+									
+									System.out.println("");
+									System.out.println("Telefone alterado com sucesso!");
+									System.out.println("");
+																		
+									break;	
+									
+								case 4: 	
+									System.out.println("");
+									System.out.print("Deseja alterar para qual ENDEREÇO? ");
+									String newType = scan2.next();
+									
+									listaCliente.get(i).setTipo(newType);
+									
+									System.out.println("");
+									System.out.println("Tipo alterado com sucesso!");
+									System.out.println("");
+																		
+									break;	
+					
+								case 0:
+									
+									break;
+									
+								default: 
+									System.err.println("Opção inválida!");
+								}
+							}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Código não encontrada!");				
+							System.out.println("");	
+						}
+						
+						break;
+						
+					case 3:
+						System.out.println("---------- Excluir Cliente ----------");
+						System.out.println("");
+						
+						System.out.print("Digite o CÓDIGO dx cliente que deseja excluir: ");
+						excluirC = scan2.next();
+						
+						for(i=0;i<listaCliente.size();i++) {
+							if(excluirC.equals(listaCliente.get(i).getCodigo())) {
+								listaCliente.remove(listaCliente.get(i));
+								achou = true;
+								System.out.println("");
+								System.out.println("Cliente excluídx com sucesso!");
+								System.out.println("");
+								}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Código não encontrada!");				
+							System.out.println("");	
+						}
+						
+						break;
+						
+					case 4:
+						System.out.println("--------- Clientes Cadastrados ----------");
+						System.out.println("");
+						for(i=0;i<listaProduto.size();i++) {
+							System.out.println("--- Cliente " + (i+1) + " ---");
+							System.out.println("Código: " + listaCliente.get(i).getCodigo());
+							System.out.println("Nome: " + listaCliente.get(i).getNome());
+							System.out.println("Endereço: " + listaCliente.get(i).getEndereco());
+							System.out.println("Telefone: " + listaCliente.get(i).getTelefone());
+							System.out.println("Tipo: " + listaCliente.get(i).getTipo());
+							
+							System.out.println("");
+							}
+						
+						
+						break;
+						
+					case 0:
+						
+						
+						break;
+						
+					default:
+						System.out.println("");	
+						System.err.println("Opção inválida!");				
+						System.out.println("");	
+						
+						break;
+					}
+								
+				}while(escolha!=0);
+				
+				
+				break;
+											
+			case 0:
+				System.out.println("");	
+				System.out.println("Obrigado por usar o nosso sistema de dados!");
+				
+				break;
+				
+			default:
+				System.out.println("");	
+				System.err.println("Opção inválida!");				
+				System.out.println("");	
+				
+				break;	
+			}	
+		
+		}while(opcao!=0);
+	
+	}	
+	
+}	
+
+// Classe Cliente
+
+
+public class Cliente {
+
+	private String codigo;
+	private String nome;
+	private String endereco;
+	private String telefone;
+	private String tipo;
+	
+	public Cliente() {}
+	
+	public Cliente(String codigo, String nome, String endereco, String telefone, String tipo) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefone = telefone;
+		this.tipo = tipo;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+		
+
+}
+
+
+// Classe Produto
+
+
+public class Produto {
+
+	private String codigo;
+	private String descricao;
+	private Double preco;
+	private Integer estoque;
+	
+	public Produto() {}
+	
+	public Produto(String codigo, String descricao, Double preco, Integer estoque) {
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.estoque = estoque;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public Integer getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(Integer estoque) {
+		this.estoque = estoque;
+	}
+	
+	
+	
+}
+
+
+// Classe Vendedor 
+
+
+public class Vendedor {
+
+	private String matricula;
+	private String nome;
+	private Double salario;
+	
+	public Vendedor() {}
+	
+	public Vendedor(String matricula, String nome, Double salario) {
+		this.matricula = matricula;
+		this.nome = nome;
+		this.salario = salario;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(Double salario) {
+		this.salario = salario;
+	}
+	
+	
+	
+}
