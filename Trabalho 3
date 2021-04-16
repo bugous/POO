@@ -1,0 +1,859 @@
+/* Deseja-se construir uma rede social simples em que usuários
+registrem mensagens que possam ser visualizadas por outros
+usuários.
+Cada usuário pode postar a quantidade de mensagens que
+desejar. Porém, o tamanho das mensagens é limitado a 140
+caracteres. O sistema deve registrar a data e hora em que a
+mensagem foi postada.
+
+Cada usuário na rede possui uma lista de seguidores. Um seguidor
+é outro usuário na rede que se interessa pelas mensagens
+postadas pelo usuário.
+
+Somente usuários seguidores de um usuário A podem comentar
+as mensagens registras por A. Cada mensagem registrada, então,
+possui uma lista de comentários. Comentários também são
+limitados a 140 caracteres. Para cada um desses comentários, o
+sistema deve registrar o usuário autor, bem como a data e hora
+em que o comentário foi registrado.
+
+
+Para cada usuário na rede, deseja-se manter os seguintes dados:
+nome, e-mail, data de nascimento e login.
+Faça um programa em Java que realize as funcionalidades de um
+sistema como esse. O programa deverá prover as seguintes
+funcionalidades:
+
+Usuário:
+
+ Cadastrar usuário: o sistema não deve permitir que
+mais de um usuário seja cadastrado com o mesmo
+login.
+ Excluir usuário: essa funcionalidade deve remover o
+usuário da rede. O usuário deve ser removido também
+de todas as listas de seguidores das quais participe.
+Todas as mensagens e comentários postados pelo
+usuário deverão também ser excluídos.
+ Listar usuários: lista todos os usuários cadastrados na
+rede (somente login e nome).
+ Pesquisar: dado o login, o sistema exibe os dados do
+usuário (nome, e-mail, data de nascimento e login).
+ Alterar: permite a modificação dos dados do usuário
+(exceto o login).
+
+Seguidores:
+ Seguir: dado o login de um usuário A e de um usuário
+B, o sistema inclui B na lista de seguidores de A.
+ Cancelar seguir: dado o login de um usuário A e de um
+usuário B, o sistema remove B da lista de seguidores de
+A.
+
+Mensagens:
+ Registrar mensagem: dado o login de um usuário A e
+uma mensagem, o sistema inclui a mensagem na lista
+de mensagens de A.
+ Comentar mensagem: dado o login de um usuário A, o
+sistema exibe as mensagens postadas por A. O usuário,
+então, seleciona a mensagem a ser comentada (por
+exemplo, informando o número da mensagem),
+informa o login do usuário B e o comentário a ser
+registrado. Se B for seguidor de A, o sistema registra o
+comentário para a mensagem selecionada (somente
+seguidor de A pode registrar comentários).
+ Ver mensagens: dado o login de um usuário A, o
+sistema exibe as mensagens postadas por A e pelas
+pessoas que A segue (ou seja, os amigos de A). Não é
+necessário mostrar os comentários dessas mensagens
+em um primeiro momento. Após isso, o usuário
+seleciona uma mensagem específica e o sistema exibe
+todos os comentários postados para esta msg.
+
+Rede:
+ Seguidores: dado o login de um usuário A, o sistema
+exibe os dados (login e nome) de seus seguidores.
+ Seguidos: dado o login de um usuário A, o sistema
+exibe os dados (login e nome) dos usuários que A
+segue.
+ Mais influente: o sistema exibe os dados (login, nome
+e quantidade de seguidores) do usuário que possui
+mais seguidores na rede.
+ Ocorrência de assunto: dada uma expressão, o sistema
+informa em quantas mensagens e comentários ela
+ocorreu. */
+
+//Classe Principal
+
+import java.util.Scanner;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
+public class RedeSocial {
+	
+	@SuppressWarnings("unchecked")
+	public static void main(String [] args) {
+		
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		@SuppressWarnings({ "unused", "resource" })
+		Scanner scan2 = new Scanner(System.in);
+		@SuppressWarnings({ "unused", "resource" })
+		Scanner scan3 = new Scanner(System.in);
+		
+		List<Usuario> listaUsuario = new ArrayList<Usuario>();
+		List<Mensagens> listaMensagens = new ArrayList<Mensagens>();
+		
+		Integer opcao, opcaoU, opcaoS, opcaoR, opcaoM, diaU, mesU, anoU, i1, i, j1=0, l, j, m;
+		String nomeU, emailU, loginU, loginM, mensagem;
+		Boolean achou, achou1;
+		Calendar horaComentarioo = null;
+		
+		System.out.println("Bem-vindo a nossa Rede Social!");
+		
+		do {
+			System.out.println("");
+			System.out.println("");
+			System.out.println("========== MENU ==========");
+			System.out.println("");
+			System.out.println("");
+			
+			System.out.println("1. Usuários;");
+			System.out.println("2. Seguidores;");
+			System.out.println("3. Mensagens;");
+			System.out.println("4. Rede;");
+			System.out.println("");
+			System.out.println("0. Sair.");
+			System.out.println("");
+			System.out.print("Opção desejada: ");
+			opcao = scan.nextInt();
+			
+			System.out.println("");
+			System.out.println("-----------------------------------------");
+			
+			switch(opcao) {
+			case 1:
+				do{
+					System.out.println("");
+					System.out.println("");
+					System.out.println("========== USUÁRIOS ==========");
+					System.out.println("");
+					System.out.println("");
+					
+					System.out.println("1. Cadastrar;");
+					System.out.println("2. Excluir;");
+					System.out.println("3. Listar;");
+					System.out.println("4. Pesquiar;");
+					System.out.println("5. Alterar;");				
+					System.out.println("");
+					System.out.println("0. Sair.");
+					System.out.println("");
+					System.out.print("Opção desejada: ");
+					opcaoU = scan.nextInt();
+				
+					System.out.println("");
+					System.out.println("-----------------------------------------");
+				
+					switch(opcaoU){
+					case 1:
+						System.out.println("");
+						System.out.println("");
+						System.out.println("========== CADASTRO DE USUÁRIO ==========");
+						System.out.println("");
+						System.out.println("");
+					
+						System.out.print("Digite o NOME do Usuário: ");
+						nomeU = scan3.nextLine();
+						
+						System.out.print("Digite o E-MAIL do Usuário: ");
+						emailU = scan2.next();
+						
+						System.out.print("Digite o DIA do NASCIMENTO do Usuário: ");
+						diaU = scan.nextInt();
+						
+						System.out.print("Digite o MÊS do NASCIMENTO do Usuário: ");
+						mesU = scan.nextInt();
+						
+						System.out.print("Digite o ANO do NASCIMENTO do Usuário: ");
+						anoU = scan.nextInt();
+						
+						System.out.print("Digite o LOGIN do Usuário: ");
+						loginU = scan2.next();
+						
+						Calendar dataNascimento = Calendar.getInstance();
+						dataNascimento.set(Calendar.DAY_OF_MONTH, diaU);
+						dataNascimento.set(Calendar.MONTH, mesU - 1);
+						dataNascimento.set(Calendar.YEAR, anoU);	
+						
+						Usuario user = new Usuario(nomeU, emailU, dataNascimento, loginU);
+						listaUsuario.add(user);					
+												
+						System.out.println("");
+						System.out.println("Usuário cadastrado!");	
+						System.out.println("");
+												
+						System.out.println("-----------------------------------------");
+						
+						break;
+						
+					case 2:
+						achou = false;
+						
+						System.out.println("");
+						System.out.println("");
+						System.out.println("========== EXCLUIR USUÁRIO ==========");
+						System.out.println("");
+						System.out.println("");
+						
+						System.out.print("Digite o LOGIN do Usuário que deseja excluir: ");
+						String loginA = scan2.next();
+						
+						for(i=0;i<listaUsuario.size();i++) {
+							if(loginA.equals(listaUsuario.get(i).getLogin())) {
+								listaUsuario.remove(listaUsuario.get(i));
+								achou = true;
+								
+								System.out.println("");
+								System.out.println("Usuário excluído!");	
+								System.out.println("");
+														
+								System.out.println("-----------------------------------------");
+								}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Número inválido ou inexistente!");			
+							System.out.println("");	
+						}
+						
+						break;
+						
+					case 3:
+						System.out.println("");
+						System.out.println("");
+						System.out.println("========== LISTA DE USUÁRIOS CADASTRADOS ==========");
+						System.out.println("");
+						System.out.println("");
+						
+						for(i=0;i<listaUsuario.size();i++) {
+							
+							Integer mesNasceu = listaUsuario.get(i).dataDeNascimento.get(Calendar.MONTH );
+							
+							System.out.println("----- Usuário " + (i+1) + " -----");
+							System.out.println("");
+							System.out.println("Nome Completo: " + listaUsuario.get(i).getNome());
+							System.out.println("E-mail: " + listaUsuario.get(i).getEmail());
+							System.out.println("Data de Nascimento: " + listaUsuario.get(i).dataDeNascimento.get(Calendar.DAY_OF_MONTH) + "/" + (mesNasceu + 1) + "/" + listaUsuario.get(i).dataDeNascimento.get(Calendar.YEAR));
+							System.out.println("Login: " + listaUsuario.get(i).getLogin());
+							System.out.println("");
+							System.out.println("");
+							}
+						
+						System.out.println("-----------------------------------------");
+						break;
+						
+					case 4:
+						
+						break;
+						
+					case 5:
+						
+						break;
+						
+					case 0:
+						
+						break;
+						
+					default:
+						System.out.println("");
+						System.err.println("Opção inválida");
+						System.out.println("");
+						
+						break; 
+						
+					}
+					
+				}while(opcaoU!=0);	
+				
+				break;
+				
+			case 2:
+				do{
+					System.out.println("");
+					System.out.println("");
+					System.out.println("========== SEGUIDORES ==========");
+					System.out.println("");
+					System.out.println("");
+					
+					System.out.println("1. Seguir;");
+					System.out.println("2. Cancelar seguir;");
+					System.out.println("");
+					System.out.println("0. Sair.");
+					System.out.println("");
+					System.out.print("Opção desejada: ");
+					opcaoS = scan.nextInt();
+				
+					System.out.println("");
+					System.out.println("-----------------------------------------");
+					
+					switch(opcaoS) {
+					
+					case 1:
+						System.out.println("");
+						System.out.println("");
+						System.out.println("========== SEGUIR ==========");
+						System.out.println("");
+						System.out.println("");
+						
+						System.out.print("Digite o LOGIN do Usuário que será SEGUIDO: ");
+						String seguido = scan2.next();
+						
+						achou = false;
+						achou1 = false;
+						
+						for(i=0;i<listaUsuario.size();i++){
+							if(seguido.equals(listaUsuario.get(i).getLogin())){
+								achou = true;
+								
+								System.out.print("Digite o LOGIN do USUÁRIO que irá SEGUIR: ");
+								String seguidor = scan2.next();
+								
+								for(j=0;j<listaUsuario.size();j++){
+									if(seguidor.equals(listaUsuario.get(j).getLogin())){
+										achou1 = true;
+
+										listaUsuario.get(j).Seguir(listaUsuario.get(i));
+																														
+										System.out.println("");	
+										System.out.println(seguidor + " agora é seguidor(a) de " + seguido + "!");				
+																		
+										System.out.println("");
+										System.out.println("-----------------------------------------");
+										
+									}	
+								}
+								
+								if(achou1 == false) {
+									System.out.println("");	
+									System.err.println("Usuário inválido ou inexistente!");			
+									System.out.println("");	
+									System.out.println("-----------------------------------------");												
+								}
+								
+							}
+						}
+						
+						if(achou == false) {
+							System.out.println("");	
+							System.err.println("Usuário inválido ou inexistente!");			
+							System.out.println("");	
+							System.out.println("-----------------------------------------");						
+						}
+						
+						
+						break;
+					
+					case 2:					
+						for(i=0;i<listaUsuario.size();i++)
+							System.out.println(listaUsuario.get(i).getSeguidores());	
+						
+						
+						break;
+						
+					case 0:
+						
+						break;
+						
+					default:
+						System.out.println("");
+						System.err.println("Opção inválida");
+						System.out.println("");
+						
+						break;
+						
+					}
+					
+				}while(opcaoS!=0);	
+				
+				break;
+				
+			case 3:
+				do {
+				System.out.println("");
+				System.out.println("");
+				System.out.println("========== MENSAGEM ==========");
+				System.out.println("");
+				System.out.println("");
+				
+				System.out.println("1. Registrar;");
+				System.out.println("2. Comentar;");
+				System.out.println("3. Ver mensagens;");
+				System.out.println("");
+				System.out.println("0. Sair.");
+				System.out.println("");
+				System.out.print("Opção desejada: ");
+				opcaoM = scan.nextInt();
+			
+				System.out.println("");
+				System.out.println("-----------------------------------------");
+				
+				switch(opcaoM) {
+				
+				case 1:
+					System.out.println("");
+					System.out.println("");
+					System.out.println("========== REGISTRAR MENSAGEM ==========");
+					System.out.println("");
+					System.out.println("");
+					
+					System.out.print("Digite o LOGIN do Usuário que irá registrar a Mensagem: ");
+					loginM = scan3.nextLine();
+					
+					System.out.print("Digite a MENSAGEM: ");
+					mensagem = scan3.nextLine();
+										
+					Calendar horaMensagem = Calendar.getInstance();	
+					
+					String comentario = null;
+					
+					String nomeComentario = null;
+					
+					Calendar horaComentario = null;
+					
+					Mensagens mensagens = new Mensagens(mensagem, horaMensagem, loginM, comentario, horaComentario, nomeComentario);
+					listaMensagens.add(mensagens);							
+											
+					System.out.println("");
+					System.out.println("Mensagem cadastrada!");	
+					System.out.println("");
+											
+					System.out.println("-----------------------------------------");
+					
+
+					break;
+				
+				case 2:				
+					Integer k=1;
+					
+					System.out.println("");
+					System.out.println("");
+					System.out.println("========== COMENTAR MENSAGEM ==========");
+					System.out.println("");
+					System.out.println("");
+					
+					System.out.print("Digite o LOGIN do Usuário que você deseja ver as mensagens escritas por ele: ");
+					String loginA = scan2.next();
+					
+					achou = false;
+					achou1 = false;
+					
+					for(i=0;i<listaMensagens.size();i++){
+						if(loginA.equals(listaMensagens.get(i).getNomeMensagem())){
+							achou = true;
+							Integer mes = (listaMensagens.get(i).horaMensagem.get(Calendar.MONTH) + 1);
+							
+							System.out.println("");
+							System.out.println("===== Mensagem " + k + " =====");							
+							System.out.println("");
+							System.out.println("Nome: " + listaMensagens.get(i).getNomeMensagem());
+							System.out.println("Mensagem: " + listaMensagens.get(i).getMensagem());
+							System.out.println( + listaMensagens.get(i).horaMensagem.get(Calendar.HOUR_OF_DAY) + ":" + listaMensagens.get(i).horaMensagem.get(Calendar.MINUTE) + ":" + listaMensagens.get(i).horaMensagem.get(Calendar.SECOND) + " " + listaMensagens.get(i).horaMensagem.get(Calendar.DAY_OF_MONTH) + "/" + mes + "/" + listaMensagens.get(i).horaMensagem.get(Calendar.YEAR));
+							System.out.println("");
+							
+							k++;
+							
+										
+						}
+					}
+					
+					System.out.print("Digite o NÚMERO da Mensagem que deseja Comentar: ");
+					Integer leitorM = scan.nextInt();
+														
+							for(l=0;l<k;l++) {
+								if(leitorM.equals(l)){
+									
+									achou1 = true;
+									
+									for(i=0;i<listaMensagens.size();i++){
+										if(loginA.equals(listaMensagens.get(i).getNomeMensagem())){
+											
+											System.out.println("");
+											System.out.print("Digite o COMENTÁRIO: ");
+											String comentarioo = scan3.nextLine();
+							
+											listaMensagens.get(i).setComentario(comentarioo);
+							
+											System.out.print("Digite o LOGIN do autor do Comentário: ");
+											String comentarioAutor = scan2.next();
+							
+											listaMensagens.get(i).setNomeComentario(comentarioAutor);
+							
+											horaComentarioo = Calendar.getInstance();
+							
+											listaMensagens.get(i).setHoraComentario(horaComentarioo);
+							
+											System.out.println("");
+											System.out.println("Comentário registrado!");	
+											System.out.println("");
+											
+											break;
+											
+											}
+										}
+							
+									}
+								}
+					
+					
+					if(achou1 == false) {
+						System.out.println("");	
+						System.err.println("Número inválido!");			
+						System.out.println("");	
+						System.out.println("-----------------------------------------");						
+					}			
+					
+					if(achou == false) {
+						System.out.println("");	
+						System.err.println("Usuário inválido ou inexistente!");			
+						System.out.println("");	
+						System.out.println("-----------------------------------------");						
+					}
+															
+					
+					break;
+					
+				case 3:
+					Integer k1=1;
+					
+					System.out.println("");
+					System.out.println("");
+					System.out.println("========== VER MENSAGEM ==========");
+					System.out.println("");
+					System.out.println("");
+					
+					System.out.print("Digite o LOGIN do Usuário que você deseja ver as mensagens escritas por ele: ");
+					String loginA1 = scan2.next();
+					
+					achou = false;
+					
+					for(i=0;i<listaMensagens.size();i++){
+						if(loginA1.equals(listaMensagens.get(i).getNomeMensagem())){
+							achou = true;
+							Integer mes = (listaMensagens.get(i).horaMensagem.get(Calendar.MONTH) + 1);
+							
+							System.out.println("");
+							System.out.println("===== Mensagem " + k1 + " =====");
+							System.out.println("");
+							System.out.println("");
+							System.out.println("Nome: " + listaMensagens.get(i).getNomeMensagem());
+							System.out.println("Mensagem: " + listaMensagens.get(i).getMensagem());
+							System.out.println(listaMensagens.get(i).horaMensagem.get(Calendar.HOUR_OF_DAY) + ":" + listaMensagens.get(i).horaMensagem.get(Calendar.MINUTE) + ":" + listaMensagens.get(i).horaMensagem.get(Calendar.SECOND) + " " + listaMensagens.get(i).horaMensagem.get(Calendar.DAY_OF_MONTH) + "/" + mes + "/" + listaMensagens.get(i).horaMensagem.get(Calendar.YEAR));
+							if(listaMensagens.get(i).getComentario()!= null){
+							System.out.println("");
+							System.out.println("Comentario: " + listaMensagens.get(i).getComentario());
+							System.out.println("Por: " + listaMensagens.get(i).getNomeComentario());
+							System.out.println(listaMensagens.get(i).horaComentario.get(Calendar.HOUR_OF_DAY) + ":" + listaMensagens.get(i).horaComentario.get(Calendar.MINUTE) + ":" + listaMensagens.get(i).horaComentario.get(Calendar.SECOND) + " " + listaMensagens.get(i).horaComentario.get(Calendar.DAY_OF_MONTH) + "/" + mes + "/" + listaMensagens.get(i).horaComentario.get(Calendar.YEAR));														
+							}
+							k1++;
+						}
+					}
+					
+					if(achou == false) {
+						System.out.println("");	
+						System.err.println("Usuário inválido ou inexistente!");			
+						System.out.println("");	
+						System.out.println("-----------------------------------------");						
+					}
+					
+					break;					
+					
+				case 0:
+					
+					break;
+					
+				default:
+					System.out.println("");
+					System.err.println("Opção inválida");
+					System.out.println("");
+					
+					break;
+					
+				}
+				
+			}while(opcaoM!=0);	
+			
+						
+				break;
+				
+			case 4:
+				do{
+					System.out.println("");
+					System.out.println("");
+					System.out.println("========== REDE ==========");
+					System.out.println("");
+					System.out.println("");
+					
+					System.out.println("1. Seguidores;");
+					System.out.println("2. Seguidos;");
+					System.out.println("3. Mais ifluente;");
+					System.out.println("4. Ocorrência de assunto;");
+					System.out.println("");
+					System.out.println("0. Sair.");
+					System.out.println("");
+					System.out.print("Opção desejada: ");
+					opcaoR = scan.nextInt();
+				
+					System.out.println("");
+					System.out.println("-----------------------------------------");
+					
+					switch(opcaoR) {
+					
+					case 1:
+						
+						break;
+					
+					case 2:											
+						
+						break;
+						
+					case 3:
+						System.out.println("");
+						System.out.println("");
+						System.out.println("========== MAIS INFLUENTE ==========");
+						System.out.println("");
+						System.out.println("");
+						
+						Integer maior = 0;
+						
+						for(i=0;i<listaUsuario.size();i++) {
+							if(listaUsuario.get(i).getSeguidores().size() > maior){
+								maior = listaUsuario.get(i).getSeguidores().size();
+								j1 = i;
+							}
+						}
+						System.out.println("O usuário mais influente é: ");
+						System.out.println("");
+						System.out.println("Nome: " + listaUsuario.get(j1).getNome());
+						System.out.println("Login: " + listaUsuario.get(j1).getLogin());
+						System.out.println("Seguidores: " + maior + " seguidores");
+						System.out.println("");
+						
+						System.out.println("");
+						System.out.println("-----------------------------------------");
+						
+						break;
+						
+					case 4:
+						
+						break;
+						
+					case 0:
+						
+						break;
+						
+					default:
+						System.out.println("");
+						System.err.println("Opção inválida");
+						System.out.println("");
+						
+						break;
+						
+					}
+					
+				}while(opcaoR!=0);	
+				
+				
+				
+				break;
+			
+			case 0:
+				System.out.println("");
+				System.out.println("Obrigado por usar nossa Rede Social. Volte sempre!");
+				System.out.println("");
+				
+				break;
+				
+			default:
+				System.out.println("");
+				System.err.println("Opção inválida");
+				System.out.println("");
+				
+				break; 
+				
+			}
+		}while(opcao!=0);
+		
+	}
+}
+
+//Classe Usuários
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class Usuario {
+	private String nome;
+	private String email;
+	public Calendar dataDeNascimento;
+	private String login;
+	private List<Usuario> seguidores = new ArrayList<Usuario>();
+	private List<Usuario> seguindo = new ArrayList<Usuario>();
+	private List<Usuario> mensagem = new ArrayList<Usuario>();
+	
+	public Usuario() {}
+	
+	public Usuario(String nome, String email, Calendar dataDeNascimento, String login) {
+		this.nome = nome;
+		this.email = email;
+		this.dataDeNascimento = dataDeNascimento;
+		this.login = login;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Calendar getDataDeNascimento() {
+		return dataDeNascimento;
+	}
+
+	public void setDataDeNascimento(Calendar dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	
+	
+	
+	public List<Usuario> getSeguidores() {
+		return seguidores;
+	}
+
+	public void setSeguidores(List<Usuario> seguidores) {
+		this.seguidores = seguidores;
+	}
+
+	public List<Usuario> getSeguindo() {
+		return seguindo;
+	}
+
+	public void setSeguindo(List<Usuario> seguindo) {
+		this.seguindo = seguindo;
+	}
+
+	
+	
+	public List<Usuario> getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(List<Usuario> mensagem) {
+		this.mensagem = mensagem;
+	}
+
+	public void Seguir(Usuario user) {
+		user.getSeguidores().add(this);
+		this.getSeguindo().add(user);
+	}
+	
+	
+}
+
+
+//Classe Mensagens
+
+import java.util.Calendar;
+
+public class Mensagens {
+
+		private String mensagem;
+		Calendar horaMensagem;
+		private String nomeMensagem;
+		private String comentario;
+		Calendar horaComentario;
+		private String nomeComentario;
+		
+		public Mensagens() {}
+		
+		public Mensagens(String mensagem, Calendar horaMensagem, String nomeMensagem, String comentario, Calendar horaComentario, String nomeComentario) {
+			this.mensagem = mensagem;
+			this.horaMensagem = horaMensagem;
+			this.nomeMensagem = nomeMensagem;
+			this.comentario = comentario;
+			this.horaComentario = horaComentario;
+			this.nomeComentario = nomeComentario;
+		}
+
+		public String getMensagem() {
+			return mensagem;
+		}
+
+		public void setMensagem(String mensagem) {
+			this.mensagem = mensagem;
+		}
+
+		public Calendar getHoraMensagem() {
+			return horaMensagem;
+		}
+
+		public void setHoraMensagem(Calendar horaMensagem) {
+			this.horaMensagem = horaMensagem;
+		}
+
+		public String getNomeMensagem() {
+			return nomeMensagem;
+		}
+
+		public void setNomeMensagem(String nomeMensagem) {
+			this.nomeMensagem = nomeMensagem;
+		}
+
+		public String getComentario() {
+			return comentario;
+		}
+
+		public void setComentario(String comentario) {
+			this.comentario = comentario;
+		}
+
+		public Calendar getHoraComentario() {
+			return horaComentario;
+		}
+
+		public void setHoraComentario(Calendar horaComentario) {
+			this.horaComentario = horaComentario;
+		}
+
+		public String getNomeComentario() {
+			return nomeComentario;
+		}
+
+		public void setNomeComentario(String nomeComentario) {
+			this.nomeComentario = nomeComentario;
+		}
+		
+		
+		
+}
