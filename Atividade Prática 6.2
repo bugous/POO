@@ -1,0 +1,257 @@
+/* 2) Implemente classes para representar as figuras geométricas: círculo, retângulo e quadrado.
+Para todas elas devem ser implementados métodos para retornar a área e o perímetro. O
+círculo possui um raio e as outras classes os tamanhos dos lados. Além disso as figuras
+possuem uma cor, definida por um atributo string e um atributo “filled” que diz se a figura é
+preenchida pela cor ou se é vazia. */
+
+//Classe Principal
+
+package AtividadePratica62;
+
+public class Retângulo extends FiguraGeométrica{
+	
+	private double base;
+	private double altura;
+	
+	public Retângulo(double base, double altura) {
+		super();
+		this.base = base;
+		this.altura = altura;
+	}
+	
+	
+
+	public double getBase() {
+		return base;
+	}
+
+
+
+	public void setBase(double base) {
+		this.base = base;
+	}
+
+
+
+	public double getAltura() {
+		return altura;
+	}
+
+
+
+	public void setAltura(double altura) {
+		this.altura = altura;
+	}
+
+
+
+	@Override
+	public double calcularArea() {
+		return (base * altura);
+	}
+
+	@Override
+	public double calcularPerimetro() {
+		return (2 * base) + (2 * altura);
+	}
+
+}
+
+
+// Classe FiguraGeométrica
+
+package AtividadePratica62;
+
+public abstract class FiguraGeométrica {
+	
+	protected static final double PI = 3.1445;
+
+	protected String cor;
+	
+	protected boolean filled;
+	
+	public abstract double calcularArea();
+	
+	public abstract double calcularPerimetro();
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public boolean isFilled() {
+		return filled;
+	}
+
+	public void setFilled(boolean filled) {
+		this.filled = filled;
+	}
+	
+	
+}
+
+//Classe Círculo
+
+package AtividadePratica62;
+
+public class Retângulo extends FiguraGeométrica{
+	
+	private double base;
+	private double altura;
+	
+	public Retângulo(double base, double altura) {
+		super();
+		this.base = base;
+		this.altura = altura;
+	}
+	
+	
+
+	public double getBase() {
+		return base;
+	}
+
+
+
+	public void setBase(double base) {
+		this.base = base;
+	}
+
+
+
+	public double getAltura() {
+		return altura;
+	}
+
+
+
+	public void setAltura(double altura) {
+		this.altura = altura;
+	}
+
+
+
+	@Override
+	public double calcularArea() {
+		return (base * altura);
+	}
+
+	@Override
+	public double calcularPerimetro() {
+		return (2 * base) + (2 * altura);
+	}
+
+}
+
+// Classe Quadrado
+
+package AtividadePratica62;
+
+public class Quadrado extends FiguraGeométrica{
+
+	private double lado;	
+	
+	public Quadrado(double lado) {
+		super();
+		this.lado = lado;
+	}
+
+	
+	public double getLado() {
+		return this.lado;
+	}
+
+	public void setLado(double lado) {
+		this.lado = lado;
+	}
+
+
+	@Override
+	public double calcularArea() {
+		return (lado * lado);
+	}
+
+	@Override
+	public double calcularPerimetro() {
+		return (4 * lado);
+	}
+
+}
+
+
+// Classe Círculo
+
+package AtividadePratica62;
+
+public class Círculo extends FiguraGeométrica {
+
+	private double raio;
+	private Ponto centro;
+	
+	public Círculo(double raio, double x, double y){
+		centro = new Ponto(x, y);
+		this.raio = raio;
+	}
+	
+	@Override
+	public double calcularArea() {
+		return PI * raio * raio;
+	}
+
+	@Override
+	public double calcularPerimetro() {
+		return 2 * PI * raio;
+	}
+	
+	public void alterarCentro(double valorX, double valorY) {
+		centro.setCoordX(valorX);
+		centro.setCoordY(valorY);
+	}
+	
+	public double getX() {
+		return centro.getCoordX();
+	}
+	
+	public double getY() {
+		return centro.getCoordY();
+	}
+	
+}
+
+
+// Classe Ponto
+
+package AtividadePratica62;
+
+public class Ponto {
+
+	private double coordX;
+	private double coordY;
+	public Ponto(double coordX, double coordY) {
+		super();
+		this.coordX = coordX;
+		this.coordY = coordY;
+	}
+	public double getCoordX() {
+		return coordX;
+	}
+	public void setCoordX(double coordX) {
+		this.coordX = coordX;
+	}
+	public double getCoordY() {
+		return coordY;
+	}
+	public void setCoordY(double coordY) {
+		this.coordY = coordY;
+	}
+	@Override
+	public String toString() {
+		return "Ponto [coordX= " + coordX + ", coordY= " + coordY + "]";
+	}
+	
+	
+	
+}
